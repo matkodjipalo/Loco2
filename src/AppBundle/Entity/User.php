@@ -4,11 +4,14 @@ namespace AppBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Role\Role;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @UniqueEntity(fields="email", message="Email already taken")
  * @ORM\Table(name="user")
  */
 class User implements UserInterface
@@ -21,9 +24,21 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", unique=true, length=155)
+     * @ORM\Column(type="string", length=175)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
-    private $username;
+    private $email;
+
+    /**
+     * @ORM\Column(type="string", length=155)
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=155)
+     */
+    private $lastName;
 
     /**
      * @ORM\Column(type="string")
@@ -31,9 +46,25 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
      */
     private $plainPassword;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $registrationDt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastLoginDt;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive = false;
 
     /**
      * @ORM\Column(type="json_array")
@@ -41,14 +72,9 @@ class User implements UserInterface
     private $roles = array('ROLE_USER');
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string")
      */
-    public $createdAt;
-
-    public function __construct()
-    {
-        $this->createdAt = new \Datetime();
-    }
+    private $confirmationCode;
 
     public function getRoles()
     {
@@ -67,7 +93,7 @@ class User implements UserInterface
 
     public function getUsername()
     {
-        return $this->username;
+        return $this->email;
     }
 
     public function eraseCredentials()
@@ -95,16 +121,6 @@ class User implements UserInterface
         return $this->id;
     }
 
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    public function setUsername($username)
-    {
-        $this->username = $username;
-    }
-
     public function setPassword($password)
     {
         $this->password = $password;
@@ -116,16 +132,170 @@ class User implements UserInterface
     }
 
     /**
-     * Set createdAt
+     * Set email
      *
-     * @param \DateTime $createdAt
+     * @param string $email
      *
      * @return User
      */
-    public function setCreatedAt($createdAt)
+    public function setEmail($email)
     {
-        $this->createdAt = $createdAt;
+        $this->email = $email;
 
         return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set firstName
+     *
+     * @param string $firstName
+     *
+     * @return User
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Get firstName
+     *
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     *
+     * @return User
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * Set registrationDt
+     *
+     * @param \DateTime $registrationDt
+     *
+     * @return User
+     */
+    public function setRegistrationDt($registrationDt)
+    {
+        $this->registrationDt = $registrationDt;
+
+        return $this;
+    }
+
+    /**
+     * Get registrationDt
+     *
+     * @return \DateTime
+     */
+    public function getRegistrationDt()
+    {
+        return $this->registrationDt;
+    }
+
+    /**
+     * Set lastLoginDt
+     *
+     * @param \DateTime $lastLoginDt
+     *
+     * @return User
+     */
+    public function setLastLoginDt($lastLoginDt)
+    {
+        $this->lastLoginDt = $lastLoginDt;
+
+        return $this;
+    }
+
+    /**
+     * Get lastLoginDt
+     *
+     * @return \DateTime
+     */
+    public function getLastLoginDt()
+    {
+        return $this->lastLoginDt;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return User
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set confirmationCode
+     *
+     * @param string $confirmationCode
+     *
+     * @return User
+     */
+    public function setConfirmationCode($confirmationCode)
+    {
+        $this->confirmationCode = $confirmationCode;
+
+        return $this;
+    }
+
+    /**
+     * Get confirmationCode
+     *
+     * @return string
+     */
+    public function getConfirmationCode()
+    {
+        return $this->confirmationCode;
     }
 }

@@ -4,6 +4,8 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
+use AppBundle\Entity\ToDoList;
+use AppBundle\Entity\Task;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Doctrine\Tests\Fixtures\ContainerAwareFixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -14,6 +16,7 @@ class LoadFixtures extends ContainerAwareFixture
     {
         $defaultAuthor = $this->loadUsers($manager);
         $this->loadProducts($defaultAuthor, $manager);
+        $this->loadToDoLists($defaultAuthor, $manager);
     }
 
     private function loadProducts(User $defaultAuthor, EntityManager $em)
@@ -55,8 +58,12 @@ class LoadFixtures extends ContainerAwareFixture
         $em->createQuery('DELETE FROM AppBundle:Product');
 
         $user = new User();
-        $user->setUsername('admin');
         $user->setPlainPassword('admin');
+        $user->setEmail('admin@admin.com');
+        $user->setFirstName('Adam');
+        $user->setLastName('Adminić');
+        $user->setRegistrationDt(new \DateTime());
+        $user->setLastLoginDt(new \DateTime());
         $user->setRoles(array('ROLE_ADMIN'));
 
         $em->persist($user);
@@ -64,4 +71,39 @@ class LoadFixtures extends ContainerAwareFixture
 
         return $user;
     }
+
+    private function loadToDoLists(User $defaultAuthor, EntityManager $em)
+    {
+        $em->createQuery('DELETE FROM AppBundle:ToDoList');
+
+        $toDoList1 = new ToDoList();
+        $toDoList1->setName('Kindle Fire HD 7');
+        $toDoList1->setAuthor($defaultAuthor);
+
+        $toDoList2 = new ToDoList();
+        $toDoList2->setName('Buđenje ujutro');
+        $toDoList2->setAuthor($defaultAuthor);
+
+        $this->loadTasks($toDoList2, $em);
+
+        $em->persist($toDoList1);
+        $em->persist($toDoList2);
+        $em->flush();
+    }
+
+    private function loadTasks(ToDoList $toDoList, EntityManager $em)
+    {
+        $em->createQuery('DELETE FROM AppBundle:Task');
+
+        $date = new \DateTime();
+
+        $task = new Task();
+        $task->setToDoList($toDoList);
+        $task->setDeadlineDt($date->add(new \DateInterval('P10D')));
+        $task->setName('Buđenje ujutro u 7');
+        $task->setPriority("HIGH");
+
+        $em->persist($task);
+        $em->flush();
+    }   
 }

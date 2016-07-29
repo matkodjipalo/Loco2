@@ -19,3 +19,11 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
+
+    registration_form_handler:
+        class: AppBundle\Form\Handler\RegistrationFormHandler
+        arguments: ['@user_manager']
+
+    user_manager:
+        class: AppBundle\DomainManager\UserManager
+        arguments: ['@doctrine.orm.default_entity_manager']

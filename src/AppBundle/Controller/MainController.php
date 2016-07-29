@@ -21,7 +21,8 @@ class MainController extends Controller
             ->search('');
 
         return $this->render('main/homepage.html.twig', [
-            'products' => $products
+            'products' => $products,
+            'search' => ''
         ]);
     }
 
