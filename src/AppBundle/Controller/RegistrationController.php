@@ -15,15 +15,12 @@ class RegistrationController extends Controller
      */
     public function registerAction(Request $request)
     {
-        // 1) build the form
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
         $formHandler = $this->get('registration_form_handler');
 
         if ($formHandler->handle($form, $request)) {
-			$this->sendConfirmationEmail($user);
-
 			return $this->redirectToRoute('homepage');
 		}
 
@@ -31,16 +28,5 @@ class RegistrationController extends Controller
             'registration/register.html.twig',
             array('form' => $form->createView())
         );
-    }
-
-    private function sendConfirmationEmail(User $user)
-    {
-		$message = \Swift_Message::newInstance()
-		->setSubject('Confirm account')
-		->setFrom('noreply@matthias.com')
-		->setTo($user->getEmail())
-		->setBody('Welcome! ...');
-
-		$this->get('mailer')->send($message);
     }
 }

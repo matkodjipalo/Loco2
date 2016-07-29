@@ -26,4 +26,10 @@ services:
 
     user_manager:
         class: AppBundle\DomainManager\UserManager
-        arguments: ['@doctrine.orm.default_entity_manager']
+        arguments: ['@doctrine.orm.default_entity_manager', '@event_dispatcher']
+
+    send_user_confirmation_mail_listener:
+        class: AppBundle\EventListener\SendConfirmationMailListener
+        arguments: ['@mailer']
+        tags:
+            - { name: kernel.event_subscriber }
