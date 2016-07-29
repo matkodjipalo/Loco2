@@ -1,0 +1,20 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+    encoders:
+        AppBundle\Entity\User: bcrypt
+
+    providers:
+        main:
+            id: user_repository
+
+    firewalls:
+        main:
+            anonymous: true
+            form_login:
+                login_path: /login
+                check_path: /admin/login_check
+            logout:
+                path: /admin/logout
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }

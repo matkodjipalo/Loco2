@@ -1,0 +1,21 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+    schema_manager:
+        class: AppBundle\Doctrine\SchemaManager
+        arguments: ['@doctrine.orm.entity_manager', '@service_container']
+
+    user_repository:
+        class: AppBundle\Repository\UserRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
+        arguments: [AppBundle:User]
+
+    doctrine.user_password_encoder_listener:
+        class: AppBundle\Doctrine\UserPasswordEncoderListener
+        arguments: ['@security.user_password_encoder.generic']
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
