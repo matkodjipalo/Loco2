@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ToDoListRepository")
  * @ORM\Table(name="todo_list")
  */
 class ToDoList
@@ -16,6 +16,11 @@ class ToDoList
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
@@ -30,7 +35,7 @@ class ToDoList
     /**
      * @ORM\OneToMany(targetEntity="Task", mappedBy="toDoList")
      */
-    private $toDoList;
+    private $tasks;
 
     /**
      * Get id
@@ -89,45 +94,69 @@ class ToDoList
     {
         return $this->author;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->toDoList = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
-     * Add toDoList
+     * Set createdAt
      *
-     * @param \AppBundle\Entity\Task $toDoList
+     * @param \DateTime $createdAt
      *
      * @return ToDoList
      */
-    public function addToDoList(\AppBundle\Entity\Task $toDoList)
+    public function setCreatedAt($createdAt)
     {
-        $this->toDoList[] = $toDoList;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * Remove toDoList
+     * Get createdAt
      *
-     * @param \AppBundle\Entity\Task $toDoList
+     * @return \DateTime
      */
-    public function removeToDoList(\AppBundle\Entity\Task $toDoList)
+    public function getCreatedAt()
     {
-        $this->toDoList->removeElement($toDoList);
+        return $this->createdAt;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Get toDoList
+     * Add task
+     *
+     * @param \AppBundle\Entity\Task $task
+     *
+     * @return ToDoList
+     */
+    public function addTask(\AppBundle\Entity\Task $task)
+    {
+        $this->tasks[] = $task;
+
+        return $this;
+    }
+
+    /**
+     * Remove task
+     *
+     * @param \AppBundle\Entity\Task $task
+     */
+    public function removeTask(\AppBundle\Entity\Task $task)
+    {
+        $this->tasks->removeElement($task);
+    }
+
+    /**
+     * Get tasks
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getToDoList()
+    public function getTasks()
     {
-        return $this->toDoList;
+        return $this->tasks;
     }
 }

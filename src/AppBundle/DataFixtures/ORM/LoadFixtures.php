@@ -79,10 +79,12 @@ class LoadFixtures extends ContainerAwareFixture
         $toDoList1 = new ToDoList();
         $toDoList1->setName('Kindle Fire HD 7');
         $toDoList1->setAuthor($defaultAuthor);
+        $toDoList1->setCreatedAt(new \DateTime());
 
         $toDoList2 = new ToDoList();
         $toDoList2->setName('Buđenje ujutro');
         $toDoList2->setAuthor($defaultAuthor);
+        $toDoList2->setCreatedAt(new \DateTime());
 
         $this->loadTasks($toDoList2, $em);
 
@@ -102,8 +104,17 @@ class LoadFixtures extends ContainerAwareFixture
         $task->setDeadlineDt($date->add(new \DateInterval('P10D')));
         $task->setName('Buđenje ujutro u 7');
         $task->setPriority("HIGH");
+        $task->setIsCompleted(true);
+
+        $task2 = new Task();
+        $task2->setToDoList($toDoList);
+        $task2->setDeadlineDt($date->add(new \DateInterval('P2D')));
+        $task2->setName('Kopanje vrta');
+        $task2->setPriority("HIGH");
+        $task2->setIsCompleted(false);
 
         $em->persist($task);
+        $em->persist($task2);
         $em->flush();
     }   
 }
