@@ -22,20 +22,34 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Price</th>
+                        {% set currentOrderDirection = app.request.get('orderDirection') %}
+                        {% set orderDirection = currentOrderDirection == null or currentOrderDirection == "DESC" ? "ASC" : "DESC"  %}
+                        <th><a href="{{ path('homepage', {'orderBy': 'name', 'orderDirection': orderDirection }) }}">Name</a></th>
+                        <th><a href="{{ path('homepage', {'orderBy': 'createdAt', 'orderDirection': orderDirection }) }}">Created</a></th>
+                        <th>Total tasks</th>
+                        <th>Uncompleted tasks</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for product in products %}
+                    {% for toDoList in toDoLists %}
                     <tr>
-                        <td>{{ product.name }}</td>
-                        <td>${{ product.price|number_format(2) }}</td>
+                        <td>{{ toDoList.name }}</td>
+                        <td>{{ toDoList.createdAt|date("m/d/Y") }}</td>
+                        <td>{{ toDoList.tasks|length }}</td>    
+                        <td>{{ toDoList.tasks|uncompletedTask|length }}</td>    
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
+    {% block customJavascripts %}
+    <script type="text/javascript">
+        //alert("Hello");
+    </script>
+    {% endblock %}
 </section>
 {% endblock %}
+
+
+
