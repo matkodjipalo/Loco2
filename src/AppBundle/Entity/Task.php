@@ -38,6 +38,11 @@ class Task
     private $deadlineDt;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isCompleted = false;
+
+    /**
      * Get id
      *
      * @return integer
@@ -141,5 +146,29 @@ class Task
     public function getToDoList()
     {
         return $this->toDoList;
+    }
+
+    /**
+     * Set isCompleted
+     *
+     * @param boolean $isCompleted
+     *
+     * @return Task
+     */
+    public function setIsCompleted($isCompleted)
+    {
+        $this->isCompleted = $isCompleted;
+
+        return $this;
+    }
+
+    /**
+     * Get isCompleted
+     *
+     * @return boolean
+     */
+    public function getIsCompleted()
+    {
+        return $this->isCompleted;
     }
 }

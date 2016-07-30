@@ -10,11 +10,11 @@ security:
 
     firewalls:
         main:
-            anonymous: true
+            anonymous: ~
             form_login:
-                login_path: /login
-                check_path: /admin/login_check
+                login_path: login
+                check_path: login
             logout:
                 path: /admin/logout
-    access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
+    #access_control:
+     #   - { path: ^/admin, roles: ROLE_ADMIN }
