@@ -13,7 +13,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 {
     public function loadUserByUsername($username)
     {
-        $user = $this->findOneBy(array('username' => $username));
+        $user = $this->findOneBy(array('email' => $username));
 
         if (!$user) {
             throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
