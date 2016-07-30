@@ -25,15 +25,25 @@ class UserManager
 
 	public function createUser(User $user)
 	{
-		$confirmationCode = random_bytes(30);
-		$user->setConfirmationCode(base64_encode($confirmationCode));
-		$user->setRegistrationDt(new \DateTime());
-
 		$this->entityManager->persist($user);
 		$this->entityManager->flush();
 
 		$this->eventDispatcher->dispatch(
 			UserEvents::NEW_USER_CREATED,
+			new UserEvent($user)
+		);
+	}
+
+	public function enableUser(User $user)
+	{
+		$user->setConfirmationCode(null);
+        $user->setIsActive(true);
+
+		$this->entityManager->persist($user);
+		$this->entityManager->flush();
+
+		$this->eventDispatcher->dispatch(
+			UserEvents::NEW_USER_ENABLED,
 			new UserEvent($user)
 		);
 	}
