@@ -29,21 +29,6 @@ class UserPasswordEncoderListener
         $this->encodePassword($entity);
     }
 
-    public function preUpdate(PreUpdateEventArgs $event)
-    {
-        $entity = $event->getEntity();
-        if (!$entity instanceof User) {
-            return;
-        }
-
-        $this->encodePassword($entity);
-
-        // force the save
-        $em = $event->getEntityManager();
-        $md = $em->getClassMetadata('Smartburk\Bundle\MainBundle\Entity\Series');
-        $em->getUnitOfWork()->recomputeSingleEntityChangeSet($md, $entity);
-    }
-
     private function encodePassword(User $user)
     {
         if ($user->getPlainPassword()) {
