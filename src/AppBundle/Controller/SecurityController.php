@@ -5,7 +5,7 @@ namespace AppBundle\Controller;
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 
 class SecurityController extends Controller
@@ -13,13 +13,24 @@ class SecurityController extends Controller
     /**
      * @Route("/login", name="login")
      */
-    public function loginAction()
-    {
-        $tools = $this->get('security.authentication_utils');
+    public function loginAction(Request $request)
+    {  
+        $authenticationUtils = $this->get('security.authentication_utils');
 
-        return $this->render('main/login.html.twig', [
-            'error' => $tools->getLastAuthenticationError()
-        ]);
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render(
+            'main/login.html.twig',
+            array(
+                // last username entered by the user
+                'last_username' => $lastUsername,
+                'error'         => $error,
+            )
+        );
     }
 
     /**

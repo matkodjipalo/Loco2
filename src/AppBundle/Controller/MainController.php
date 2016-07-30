@@ -14,14 +14,17 @@ class MainController extends Controller
     /**
      * @Route("/", name="homepage")
      */
-    public function homepageAction()
+    public function homepageAction(Request $request)
     {
-        $products = $this->getDoctrine()
-            ->getRepository('AppBundle:Product')
-            ->search('');
+        $orderBy = $request->query->get('orderBy');
+        $orderDirection = $request->query->get('orderDirection');
+
+        $toDoLists = $this->getDoctrine()
+            ->getRepository('AppBundle:ToDoList')
+            ->findCustom($orderBy, $orderDirection);
 
         return $this->render('main/homepage.html.twig', [
-            'products' => $products,
+            'toDoLists' => $toDoLists,
             'search' => ''
         ]);
     }
