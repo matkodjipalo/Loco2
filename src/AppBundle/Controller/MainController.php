@@ -16,15 +16,22 @@ class MainController extends Controller
      */
     public function homepageAction(Request $request)
     {
-        $orderBy = $request->query->get('orderBy');
-        $orderDirection = $request->query->get('orderDirection');
+        $repo = $this->getDoctrine()->getRepository('AppBundle:ToDoList');
 
-        $toDoLists = $this->getDoctrine()
-            ->getRepository('AppBundle:ToDoList')
-            ->findCustom($orderBy, $orderDirection);
+        if ($request->isXMLHttpRequest()) {
+            $content = $request->getContent();
+            $params = [];
+            parse_str($content, $params);
+
+            $toDoLists = $repo->findCustom($params['orderBy'], $params['orderDirection']);
+
+            return $this->render('main/homepage_ajax_part.html.twig', [
+                'toDoLists' => $toDoLists,
+            ]);
+        }
 
         return $this->render('main/homepage.html.twig', [
-            'toDoLists' => $toDoLists,
+            'toDoLists' => $repo->findCustom(null, null),
             'search' => ''
         ]);
     }

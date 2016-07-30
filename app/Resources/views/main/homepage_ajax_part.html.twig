@@ -1,0 +1,10 @@
+<tbody  id="ajax_html_part">
+    {% for toDoList in toDoLists %}
+    <tr>
+        <td>{{ toDoList.name }}</td>
+        <td>{{ toDoList.createdAt|date("m/d/Y") }}</td>
+        <td>{{ toDoList.tasks|length }}</td>    
+        <td>{{ toDoList.tasks|uncompletedTask|length }}</td>    
+    </tr>
+    {% endfor %}
+</tbody>
