@@ -1,0 +1,60 @@
+{% extends 'layout.html.twig' %}
+
+{% block sidebar %}{% endblock %}
+
+{% block body %}
+<section>
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</a>
+                        <th>Created</th>
+                        <th>Total tasks</th>
+                        <th>Uncompleted tasks</th>
+                        <th>Progress</th>
+                    </tr>
+                </thead>
+                <tbody  id="ajax_html_part">
+                	{% set uncompleted = toDoList.tasks|uncompletedTask|length %}
+                	{% set total = toDoList.tasks|length %}
+				    <tr>
+				        <td>{{ toDoList.name }}</td>
+				        <td>{{ toDoList.createdAt|date("m/d/Y") }}</td>
+				        <td>{{ toDoList.tasks|length }}</td>    
+				        <td>{{ toDoList.tasks|uncompletedTask|length }}</td> 
+				        <td>{{ total > 0 ? (total - uncompleted)/total * 100 : 0 }} %</td>  
+				    </tr>
+				</tbody>
+            </table>
+            <h3 class="text-left">Tasks:</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</a>
+                        <th>Priority</th>
+                        <th>Deadline</th>
+                        <th>Status</th>
+                        <th>Time left</th>
+                    </tr>
+                </thead>
+                <tbody  id="ajax_html_part">
+                	{% set uncompleted = toDoList.tasks|uncompletedTask|length %}
+                	{% set total = toDoList.tasks|length %}
+        
+        			{% for task in toDoList.tasks %}
+					    <tr>
+					        <td>{{ task.name }}</td>
+					        <td>{{ task.priority }}</td>
+					        <td>{{ task.deadlineDt|date("m/d/Y") }}</td>
+					        <td>{{ task.isCompleted == 1 ? 'completed' : 'uncompleted' }}</td>    
+					        <td>{{ task.deadlineDt|time_diff}}</td>
+					    </tr>
+					{% endfor %}
+				</tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

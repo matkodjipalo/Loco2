@@ -22,7 +22,7 @@
                 </li>
                 <li><a href="{{ path('admin') }}">Admin</a></li>
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <li><a href="{{ path('admin_logout') }}">Logout</a></li>
+                    <li><a href="{{ logout_path('main') }}">Logout</a></li>
                 {% else %}
                     <li><a href="{{ path('login') }}">Login</a></li>
                 {% endif %}

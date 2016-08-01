@@ -18,7 +18,8 @@ class Task
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ToDoList", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="ToDoList", inversedBy="tasks", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $toDoList;
 
@@ -131,7 +132,7 @@ class Task
      *
      * @return Task
      */
-    public function setToDoList(\AppBundle\Entity\ToDoList $toDoList = null)
+    public function setToDoList(\AppBundle\Entity\ToDoList $toDoList)
     {
         $this->toDoList = $toDoList;
 
@@ -171,4 +172,12 @@ class Task
     {
         return $this->isCompleted;
     }
+/*
+    public function addToDoList(ToDoList $toDoList)
+    {
+        if (!$this->toDoList) {
+            $this->setToDoList($toDoList);
+        }
+    }
+*/
 }

@@ -4,7 +4,8 @@
         <td>{{ toDoList.name }}</td>
         <td>{{ toDoList.createdAt|date("m/d/Y") }}</td>
         <td>{{ toDoList.tasks|length }}</td>    
-        <td>{{ toDoList.tasks|uncompletedTask|length }}</td>    
+        <td>{{ toDoList.tasks|uncompletedTask|length }}</td> 
+        <td><a href="#" class="ajaxDelete" data-todolist-id={{ toDoList.id }}>Delete</a></td>  
     </tr>
     {% endfor %}
 </tbody>

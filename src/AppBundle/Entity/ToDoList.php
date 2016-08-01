@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="ToDoListRepository")
  * @ORM\Table(name="todo_list")
+ * @ORM\HasLifecycleCallbacks
  */
 class ToDoList
 {
@@ -24,6 +25,7 @@ class ToDoList
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\Column(nullable=false)
      */
     private $author;
 
@@ -33,7 +35,7 @@ class ToDoList
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Task", mappedBy="toDoList")
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="toDoList", cascade={"persist"})
      */
     private $tasks;
 
@@ -101,10 +103,12 @@ class ToDoList
      * @param \DateTime $createdAt
      *
      * @return ToDoList
+     *
+     * @ORM\PrePersist
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt()
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime();
 
         return $this;
     }
@@ -135,6 +139,7 @@ class ToDoList
      */
     public function addTask(\AppBundle\Entity\Task $task)
     {
+        //$task->addToDoList($this);
         $this->tasks[] = $task;
 
         return $this;
@@ -158,5 +163,32 @@ class ToDoList
     public function getTasks()
     {
         return $this->tasks;
+    }
+
+    public function removeTasks()
+    {
+        foreach ($this->tasks as $task) {
+            $this->removeTask($task);
+        }
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        foreach ($this->getTasks() as $task) {
+            $task->setToDoList($this);
+        }
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate($homepage)
+    {
+        foreach ($this->getTasks() as $task) {
+            $task->setToDoList($this);
+        }
     }
 }

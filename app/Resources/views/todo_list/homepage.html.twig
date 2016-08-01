@@ -1,0 +1,81 @@
+{% extends 'layout.html.twig' %}
+
+{% block sidebar %}{% endblock %}
+
+{% block body %}
+<section>
+    <h1 class="text-center">Welcome to the Raptor Store</h1>
+
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <h2>
+                {% if search %}
+                    {% if products is not empty %}
+                        Products matching "{{ search }}"
+                    {% else %}
+                        No products found
+                    {% endif %}
+                {% else %}
+                    Today's sweet products:
+                {% endif %}
+            </h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        {% set currentOrderDirection = app.request.get('orderDirection') %}
+                        {% set orderDirection = currentOrderDirection == null or currentOrderDirection == "DESC" ? "ASC" : "DESC"  %}
+                        <th class="ajaxSort" name="name" data-orderingdirection="DESC" href="#"><a href="#">Name</a>
+                        <th class="ajaxSort" name="createdAt" data-orderingdirection="DESC"><a href="#">Created</a></th>
+                        <th>Total tasks</th>
+                        <th>Uncompleted tasks</th>
+                    </tr>
+                </thead>
+                {% include 'todo_list/homepage_ajax_part.html.twig' %}
+            </table>
+        </div>
+    </div>
+    {% block javascripts %}
+
+        {{ parent() }}
+        <script type="text/javascript">
+            $(document).ready(function(){
+                             $("a .ajaxDelete").click(function(){
+                    var th = $(this);
+                    var url = "{{ path('delete_todolist', {id: 'ID'}) }}";
+                    url = url.replace('ID', th.data('todolist-id'));
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        success: function(response) {
+                            document.getElementById(("ajax_html_part")).innerHTML = response;
+                        }
+                    });
+                });
+                $(".ajaxSort").click(function(){
+                    //e.preventDefault();
+                    var th = $(this);
+                    var url = "{{ path('homepage', {'orderBy': "NAME", 'orderDirection': "DIRECTION"})|raw }}";
+                    url = url.replace('NAME', th.attr('name'));
+                    url = url.replace('DIRECTION', th.data('orderingdirection'));
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        success: function(response) {
+                            document.getElementById(("ajax_html_part")).innerHTML = response;
+                            if (th.data('orderingdirection') == "DESC") {
+                                th.data('orderingdirection', 'ASC');
+                            } else if (th.data('orderingdirection') == "ASC") {
+                                th.data('orderingdirection', 'DESC');
+                            }
+                        }
+                    });
+                });
+   
+            });
+        </script>   
+    {% endblock %}
+</section>
+{% endblock %}
+
+
+

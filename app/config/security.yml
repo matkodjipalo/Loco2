@@ -14,7 +14,10 @@ security:
             form_login:
                 login_path: login
                 check_path: login
-            logout:
-                path: /admin/logout
-    #access_control:
-     #   - { path: ^/admin, roles: ROLE_ADMIN }
+            logout: true
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(_(profiler|wdt)|css|images|js)/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }

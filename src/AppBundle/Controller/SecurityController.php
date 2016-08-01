@@ -24,7 +24,7 @@ class SecurityController extends Controller
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render(
-            'main/login.html.twig',
+            'todo_list/login.html.twig',
             array(
                 // last username entered by the user
                 'last_username' => $lastUsername,
@@ -34,15 +34,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/admin/login_check", name="admin_login_check")
-     */
-    public function loginCheckAction()
-    {
-
-    }
-
-    /**
-     * @Route("/admin/logout", name="admin_logout")
+     * @Route("/logout", name="logout")
      */
     public function logoutAction()
     {
