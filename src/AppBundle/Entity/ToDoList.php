@@ -35,7 +35,7 @@ class ToDoList
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Task", mappedBy="toDoList", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Task", mappedBy="toDoList")
      */
     private $tasks;
 
@@ -137,7 +137,7 @@ class ToDoList
      *
      * @return ToDoList
      */
-    public function addTask(\AppBundle\Entity\Task $task)
+    public function addTask111(\AppBundle\Entity\Task $task)
     {
         //$task->addToDoList($this);
         $this->tasks[] = $task;
@@ -169,26 +169,6 @@ class ToDoList
     {
         foreach ($this->tasks as $task) {
             $this->removeTask($task);
-        }
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function prePersist()
-    {
-        foreach ($this->getTasks() as $task) {
-            $task->setToDoList($this);
-        }
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function preUpdate($homepage)
-    {
-        foreach ($this->getTasks() as $task) {
-            $task->setToDoList($this);
         }
     }
 }

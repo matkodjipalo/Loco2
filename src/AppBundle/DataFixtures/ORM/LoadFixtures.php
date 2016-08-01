@@ -54,17 +54,16 @@ class LoadFixtures extends ContainerAwareFixture
         $toDoList2->setAuthor($defaultAuthor);
         $toDoList2->setCreatedAt(new \DateTime());
 
-        $this->loadTasks($toDoList2, $em);
+        
 
         $em->persist($toDoList1);
         $em->persist($toDoList2);
+        $this->loadTasks($toDoList2, $em);
         $em->flush();
     }
 
     private function loadTasks(ToDoList $toDoList, EntityManager $em)
     {
-        $em->createQuery('DELETE FROM AppBundle:Task');
-
         $date = new \DateTime();
 
         $task = new Task();
@@ -84,5 +83,5 @@ class LoadFixtures extends ContainerAwareFixture
         $em->persist($task);
         $em->persist($task2);
         $em->flush();
-    }   
+    }
 }

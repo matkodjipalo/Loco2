@@ -18,7 +18,7 @@ class Task
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ToDoList", inversedBy="tasks", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="ToDoList", inversedBy="tasks")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $toDoList;

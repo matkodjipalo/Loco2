@@ -11,40 +11,40 @@ use AppBundle\Event\UserEvent;
 
 class UserManager
 {
-	private $entityManager;
-	private $eventDispatcher;
+    private $entityManager;
+    private $eventDispatcher;
 
-	public function __construct(
-		EntityManager $entityManager,
-		EventDispatcherInterface $eventDispatcher
+    public function __construct(
+        EntityManager $entityManager,
+        EventDispatcherInterface $eventDispatcher
 
-	) {
-		$this->entityManager = $entityManager;
-		$this->eventDispatcher = $eventDispatcher;
-	}
+    ) {
+        $this->entityManager = $entityManager;
+        $this->eventDispatcher = $eventDispatcher;
+    }
 
-	public function createUser(User $user)
-	{
-		$this->entityManager->persist($user);
-		$this->entityManager->flush();
+    public function createUser(User $user)
+    {
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
-		$this->eventDispatcher->dispatch(
-			UserEvents::NEW_USER_CREATED,
-			new UserEvent($user)
-		);
-	}
+        $this->eventDispatcher->dispatch(
+            UserEvents::NEW_USER_CREATED,
+            new UserEvent($user)
+        );
+    }
 
-	public function enableUser(User $user)
-	{
-		$user->setConfirmationCode(null);
+    public function enableUser(User $user)
+    {
+        $user->setConfirmationCode(null);
         $user->setIsActive(true);
 
-		$this->entityManager->persist($user);
-		$this->entityManager->flush();
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
-		$this->eventDispatcher->dispatch(
-			UserEvents::NEW_USER_ENABLED,
-			new UserEvent($user)
-		);
-	}
+        $this->eventDispatcher->dispatch(
+            UserEvents::NEW_USER_ENABLED,
+            new UserEvent($user)
+        );
+    }
 }

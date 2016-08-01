@@ -24,8 +24,8 @@ class RegistrationController extends Controller
         $formHandler = $this->get('registration_form_handler');
 
         if ($formHandler->handle($form, $request)) {
-			return $this->redirectToRoute('homepage');
-		}
+            return $this->redirectToRoute('homepage');
+        }
 
         return $this->render(
             'registration/register.html.twig',
