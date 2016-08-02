@@ -1,0 +1,12 @@
+{% set uncompleted = tasks|uncompletedTask|length %}
+{% set total = tasks|length %}
+
+{% for task in tasks %}
+    <tr>
+        <td>{{ task.name }}</td>
+        <td>{{ task.priority }}</td>
+        <td>{{ task.deadlineDt|date("m/d/Y") }}</td>
+        <td>{{ task.isCompleted == 1 ? 'completed' : 'uncompleted' }}</td>    
+        <td>{{ task.deadlineDt|time_diff}}</td>
+    </tr>
+{% endfor %}
