@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="UserRepository")
  * @UniqueEntity(fields="email", message="Email already taken")
  * @ORM\Table(name="user")
  */
@@ -24,7 +24,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=175)
+     * @ORM\Column(type="string", length=175, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      */

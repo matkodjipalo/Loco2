@@ -9,7 +9,7 @@ services:
         arguments: ['@doctrine.orm.entity_manager', '@service_container']
 
     user_repository:
-        class: AppBundle\Repository\UserRepository
+        class: AppBundle\Entity\UserRepository
         factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: [AppBundle:User]
 

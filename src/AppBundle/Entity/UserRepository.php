@@ -1,8 +1,7 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace AppBundle\Entity;
 
-use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
