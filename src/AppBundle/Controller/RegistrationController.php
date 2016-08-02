@@ -45,7 +45,9 @@ class RegistrationController extends Controller
             ->findOneBy(array('confirmationCode' => $confirmationCode));
 
         if (null === $user) {
-            throw new NotFoundHttpException(sprintf('The user with confirmation code "%s" does not exist', $confirmationCode));
+            throw new NotFoundHttpException(
+                sprintf('The user with confirmation code "%s" does not exist', $confirmationCode)
+            );
         }
 
         $this->get('user_manager')->enableUser($user);

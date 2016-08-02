@@ -14,7 +14,7 @@ use AppBundle\Entity\Task;
 use AppBundle\Entity\ToDoList;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class MainController extends Controller
+class ToDoListController extends Controller
 {
     /**
      * @Route("/", name="homepage")
@@ -37,7 +37,6 @@ class MainController extends Controller
 
         return $this->render('todo_list/homepage.html.twig', [
             'toDoLists' => $repo->findByAuthor($user),
-            'search' => ''
         ]);
     }
 
@@ -160,34 +159,9 @@ class MainController extends Controller
         $em->remove($toDoList);
         $em->flush();
 
-        return $this->render('main/homepage_ajax_part.html.twig', [
+        return $this->render('todo_list/homepage_ajax_part.html.twig', [
             'toDoLists' => $repo->findByAuthor($user),
             'search' => ''
         ]);
-    }
-
-    /**
-     * @Route("/search", name="product_search")
-     */
-    public function searchAction(Request $request)
-    {
-        $search = $request->query->get('searchTerm');
-
-        $products = $this->getDoctrine()
-            ->getRepository('AppBundle:Product')
-            ->search($search);
-
-        return $this->render('todo_list/homepage.html.twig', [
-            'products' => $products,
-            'search' => $search
-        ]);
-    }
-
-    /**
-     * @Route("/admin", name="admin")
-     */
-    public function adminAction()
-    {
-        return $this->render('main/admin.html.twig');
     }
 }

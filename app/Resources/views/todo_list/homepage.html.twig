@@ -31,12 +31,11 @@
             {% endif %}
         </div>
     </div>
-    {% block javascripts %}
-
-        {{ parent() }}
+    {% block js %}
         <script type="text/javascript">
             $(document).ready(function(){
-                             $("a .ajaxDelete").click(function(){
+                $(".container").on('click', '.ajaxDelete', function(e){
+                    e.preventDefault();
                     var th = $(this);
                     var url = "{{ path('delete_todolist', {id: 'ID'}) }}";
                     url = url.replace('ID', th.data('todolist-id'));
@@ -48,8 +47,8 @@
                         }
                     });
                 });
-                $(".ajaxSort").click(function(){
-                    //e.preventDefault();
+                $(".ajaxSort").on('click', function(e){
+                    e.preventDefault();
                     var th = $(this);
                     var url = "{{ path('homepage', {'orderBy': "NAME", 'orderDirection': "DIRECTION"})|raw }}";
                     url = url.replace('NAME', th.attr('name'));
