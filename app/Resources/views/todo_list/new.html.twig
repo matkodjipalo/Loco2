@@ -22,9 +22,7 @@
             </div>
         </div>
     </div>
-    {% block javascripts %}
-
-        {{ parent() }}
+    {% block javascripts1 %}
         <script type="text/javascript">
             var $collectionHolder;
 
@@ -47,11 +45,11 @@
                 // count the current form inputs we have (e.g. 2), use that as the new
                 // index when inserting a new item (e.g. 2)
                 $collectionHolder.data('index', $collectionHolder.find(':input').length);
-console.log($collectionHolder.find(':input').length);
+
                 $addTaskLink.on('click', function(e) {
                     // prevent the link from creating a "#" on the URL
                     e.preventDefault();
-console.log("dodavanje form");
+
                     // add a new tag form (see next code block)
                     addTaskForm($collectionHolder, $newLinkLi);
                 });
@@ -60,14 +58,14 @@ console.log("dodavanje form");
             function addTaskForm($collectionHolder, $newLinkLi) {
                 // Get the data-prototype explained earlier
                 var prototype = $collectionHolder.data('prototype');
-console.log(prototype);
+
                 // get the new index
                 var index = $collectionHolder.data('index');
-console.log(index);
+
                 // Replace '__name__' in the prototype's HTML to
                 // instead be a number based on how many items we have
                 var newForm = prototype.replace(/__name__/g, index);
-console.log(newForm);
+
                 // increase the index with one for the next item
                 $collectionHolder.data('index', index + 1);
 

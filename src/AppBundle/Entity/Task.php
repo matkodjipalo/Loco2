@@ -132,7 +132,7 @@ class Task
      *
      * @return Task
      */
-    public function setToDoList(\AppBundle\Entity\ToDoList $toDoList)
+    public function setToDoList(\AppBundle\Entity\ToDoList $toDoList = null)
     {
         $this->toDoList = $toDoList;
 

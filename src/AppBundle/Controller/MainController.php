@@ -12,6 +12,7 @@ use AppBundle\Form\Type\ToDoListFormType;
 
 use AppBundle\Entity\Task;
 use AppBundle\Entity\ToDoList;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class MainController extends Controller
 {
@@ -51,7 +52,6 @@ class MainController extends Controller
             throw $this->createNotFoundException();
         }
 
-
         return $this->render('todo_list/view.html.twig', [
             'toDoList' => $toDoList
         ]);
@@ -73,16 +73,72 @@ class MainController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($toDoList);
+            foreach ($toDoList->getTasks() as $task) {
+                $task->setToDoList($toDoList);
+                $em->persist($task);
+            }
+
             $em->flush();
 
             $this->addFlash('success', 'ToDoList created!');
 
             return $this->redirectToRoute('homepage');
-
         }
 
         return $this->render('todo_list/new.html.twig', [
             'toDoListForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="edit_todolist")
+     */
+    public function editAction($id, Request $request)
+    {
+        $repo = $this->getDoctrine()->getRepository('AppBundle:ToDoList');
+        $toDoList = $repo->findOneById($id);
+
+        if (!$toDoList) {
+            throw $this->createNotFoundException();
+        }
+
+        $originalTasks = new ArrayCollection();
+
+        // Create an ArrayCollection of the current Tag objects in the database
+        foreach ($toDoList->getTasks() as $task) {
+            $originalTasks->add($task);
+        }
+
+        $editForm = $this->createForm(ToDoListFormType::class, $toDoList);
+
+        $editForm->handleRequest($request);
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            // remove the relationship between the tag and the Task
+            foreach ($originalTasks as $task) {
+                if (false === $toDoList->getTasks()->contains($task)) {
+                    $task->setToDoList(null);
+                    $em->remove($task);
+                }
+            }
+
+            $toDoList = $editForm->getData();
+            
+            foreach ($toDoList->getTasks() as $task) {
+                $task->setToDoList($toDoList);
+                $em->persist($task);
+            }
+            $toDoList->removeTasks();
+            $em->persist($toDoList);
+            $em->flush();
+
+            $this->addFlash('success', 'ToDoList edited!');
+
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('todo_list/edit.html.twig', [
+            'toDoListEditForm' => $editForm->createView()
         ]);
     }
 
