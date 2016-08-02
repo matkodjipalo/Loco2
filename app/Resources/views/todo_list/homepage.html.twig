@@ -4,34 +4,31 @@
 
 {% block body %}
 <section>
-    <h1 class="text-center">Welcome to the Raptor Store</h1>
+    <h1 class="text-center">{{ app.user.firstName }}, welcome to the todolist.com</h1>
 
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2">
-            <h2>
-                {% if search %}
-                    {% if products is not empty %}
-                        Products matching "{{ search }}"
-                    {% else %}
-                        No products found
-                    {% endif %}
-                {% else %}
-                    Today's sweet products:
-                {% endif %}
-            </h2>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        {% set currentOrderDirection = app.request.get('orderDirection') %}
-                        {% set orderDirection = currentOrderDirection == null or currentOrderDirection == "DESC" ? "ASC" : "DESC"  %}
-                        <th class="ajaxSort" name="name" data-orderingdirection="DESC" href="#"><a href="#">Name</a>
-                        <th class="ajaxSort" name="createdAt" data-orderingdirection="DESC"><a href="#">Created</a></th>
-                        <th>Total tasks</th>
-                        <th>Uncompleted tasks</th>
-                    </tr>
-                </thead>
-                {% include 'todo_list/homepage_ajax_part.html.twig' %}
-            </table>
+            {% if toDoLists %}
+                <h2>Here are your todo lists:</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            {% set currentOrderDirection = app.request.get('orderDirection') %}
+                            {% set orderDirection = currentOrderDirection == null or currentOrderDirection == "DESC" ? "ASC" : "DESC"  %}
+                            <th class="ajaxSort" name="name" data-orderingdirection="DESC" href="#"><a href="#">Name</a>
+                            <th class="ajaxSort" name="createdAt" data-orderingdirection="DESC"><a href="#">Created</a></th>
+                            <th>Total tasks</th>
+                            <th>Uncompleted tasks</th>
+                        </tr>
+                    </thead>
+                    {% include 'todo_list/homepage_ajax_part.html.twig' %}
+                </table>
+            {% else %}
+                <p class="text-center">
+                    <br><br><br>
+                    Currently, you do not have any todo list, <a href="{{ path('new_todolist') }}">but you can make one!</a>
+                </p>
+            {% endif %}
         </div>
     </div>
     {% block javascripts %}
@@ -76,6 +73,3 @@
     {% endblock %}
 </section>
 {% endblock %}
-
-
-

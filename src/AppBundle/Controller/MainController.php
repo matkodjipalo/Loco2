@@ -22,12 +22,13 @@ class MainController extends Controller
     public function homepageAction(Request $request)
     {
         $repo = $this->getDoctrine()->getRepository('AppBundle:ToDoList');
+        $user = $this->get('security.token_storage')->getToken()->getUser();
 
         if ($request->isXMLHttpRequest()) {
             $orderBy = $request->query->get('orderBy');
             $orderDirection = $request->query->get('orderDirection');
 
-            $toDoLists = $repo->findCustom($orderBy, $orderDirection);
+            $toDoLists = $repo->findByAuthor($user, $orderBy, $orderDirection);
 
             return $this->render('todo_list/homepage_ajax_part.html.twig', [
                 'toDoLists' => $toDoLists,
@@ -35,7 +36,7 @@ class MainController extends Controller
         }
 
         return $this->render('todo_list/homepage.html.twig', [
-            'toDoLists' => $repo->findCustom(null, null),
+            'toDoLists' => $repo->findByAuthor($user),
             'search' => ''
         ]);
     }
@@ -147,6 +148,7 @@ class MainController extends Controller
      */
     public function deleteAction($id, Request $request)
     {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:ToDoList');
         $toDoList = $repo->findOneById($id);
@@ -159,7 +161,7 @@ class MainController extends Controller
         $em->flush();
 
         return $this->render('main/homepage_ajax_part.html.twig', [
-            'toDoLists' => $repo->findCustom(null, null),
+            'toDoLists' => $repo->findByAuthor($user),
             'search' => ''
         ]);
     }
@@ -181,26 +183,11 @@ class MainController extends Controller
         ]);
     }
 
-
     /**
      * @Route("/admin", name="admin")
      */
     public function adminAction()
     {
         return $this->render('main/admin.html.twig');
-    }
-
-    /**
-     * @Route("/_db/rebuild", name="db_rebuild")
-     */
-    public function dbRebuildAction()
-    {
-        $schemaManager = $this->get('schema_manager');
-        $schemaManager->rebuildSchema();
-        $schemaManager->loadFixtures();
-
-        return new JsonResponse(array(
-            'success' => true
-        ));
     }
 }

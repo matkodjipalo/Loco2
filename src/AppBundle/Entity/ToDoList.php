@@ -137,7 +137,7 @@ class ToDoList
      *
      * @return ToDoList
      */
-    public function addTask111(\AppBundle\Entity\Task $task)
+    public function addTask(\AppBundle\Entity\Task $task)
     {
         //$task->addToDoList($this);
         $this->tasks[] = $task;

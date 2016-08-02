@@ -30,14 +30,11 @@
                 {% else %}
                     <li><a href="{{ path('login') }}">Login</a></li>
                 {% endif %}
-                <li><a href="{{ path('db_rebuild') }}">Reset DB</a></li>
             </ul>
         </nav>
         <h1>Dashboard</h1>
     </div>
     <hr>
-    <p class="text-center">Fence security <span class="label label-success">activated</span></p>
-
     <div class="row">
         <div class="col-sm-12">
             {% if app.session.flashBag.has('success') %}
@@ -56,7 +53,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <h1 class="knpu"><a href="http://knpuniversity.com">KnpUniversity.com</a></h1>
+                <h1 class="knpu"><a href="http://todolist.com">todolist.com</a></h1>
             </div>
             <div class="col-xs-12 col-sm-6">
                 <ul class="nav pull-right footer-nav">

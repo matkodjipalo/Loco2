@@ -16,15 +16,18 @@ class ToDoListRepository extends EntityRepository
         ));
     }
 
-    public function findCustom($orderBy, $orderDirection)
+    public function findByAuthor(User $author, $orderBy = false, $orderDirection = false)
     {
         if (!$orderBy) {
-            return $this->findAll();
+            return $this->findBy(['author' => $author->getEmail()]);
         }
 
         $orderDirection = isset($orderDirection) ? $orderDirection : 'DESC';
 
-        return $this->findBy([], [$orderBy => $orderDirection]);
+        return $this->findBy(
+            ['author' => $author->getEmail()],
+            [$orderBy => $orderDirection]
+        );
     }
 
     /**
