@@ -5,6 +5,7 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\RawMinkContext;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 
 require_once __DIR__.'/../../vendor/phpunit/phpunit/src/Framework/Assert/Functions.php';
 
@@ -13,7 +14,7 @@ require_once __DIR__.'/../../vendor/phpunit/phpunit/src/Framework/Assert/Functio
  */
 class FeatureContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
-    private $output;
+    use \Behat\Symfony2Extension\Context\KernelDictionary;
 
     /**
      * Initializes context.
@@ -27,61 +28,33 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
     }
 
     /**
-     * @Given I have a file named :filename
-     */
-    public function iHaveAFileNamed($filename)
-    {
-        touch($filename);
-    }
-
-    /**
-     * @When I run :command
-     */
-    public function iRun($command)
-    {
-        $this->output = shell_exec($command);
-    }
-
-    /**
-     * @Then I should see :string in the output
-     */
-    public function iShouldSeeInTheOutput($string)
-    {
-        assertContains(
-            $string,
-            $this->output,
-            sprintf('Did not see "%s" in output "%s"', $string, $this->output)
-        );
-    }
-
-    /**
      * @BeforeScenario
      */
-    public function moveIntoTestDir()
+    public function clearData()
     {
-        if (!is_dir('test')) {
-            mkdir('test');
-        }
-        chdir('test');
+        $purger = new ORMPurger($this->getContainer()->get('doctrine')->getManager());
+        $purger->purge();
     }
 
     /**
-     * @AfterScenario
+     * @Given there is an user :useremail with password :password
      */
-    public function moveOutOfTestDir()
+    public function thereIsAnUserWithPassword($useremail, $password)
     {
-        chdir('..');
-        if (is_dir('test')) {
-            system('rm -r '.realpath('test'));
-        }
-    }
+        $user = new \AppBundle\Entity\User();
+        $user->setPlainPassword('user');
+        $user->setEmail('user@user.com');
+        $user->setFirstName('Adam');
+        $user->setLastName('Adminić');
+        $user->setRegistrationDt(new \DateTime());
+        $user->setLastLoginDt(new \DateTime());
+        $user->setRoles(array('ROLE_USER'));
 
-    /**
-     * @Given I have a dir named :dir
-     */
-    public function iHaveADirNamed($dir)
-    {
-        mkdir($dir);
+        $em = $this->getContainer()->get('doctrine')->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $user;
     }
 
     /**

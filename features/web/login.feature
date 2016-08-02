@@ -4,8 +4,11 @@ Feature: Login
   I need to be able to login
 
   Scenario: Login as foo and see if we can logout
-    Given I am on "/login"
+    Given there is an user "user@user.com" with password "user"
+    And I am on "/login"
     When I fill in "Username" with "user@user.com"
     When I fill in "Password" with "user"
     When I press "Login"
     Then I should be on "/"
+    When I follow "Logout"
+    Then I should be on "/login"
