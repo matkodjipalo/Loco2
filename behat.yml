@@ -11,7 +11,7 @@ default:
             paths: [ %paths.base%/features/commands ]
     extensions:
         Behat\MinkExtension:
-            base_url: http://localhost/behat_loco/web/app_dev.php/
+            base_url: http://localhost/web/app_dev.php/
             goutte: ~
             selenium2: ~
             show_cmd: 'firefox %s'
