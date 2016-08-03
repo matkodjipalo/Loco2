@@ -8,28 +8,36 @@ use Symfony\Component\Form\FormInterface;
 
 class RegistrationFormHandler
 {
-	private $userManager;
+    /** @var UserManager */
+    private $userManager;
 
-	public function __construct(UserManager $userManager)
-	{
-		$this->userManager = $userManager;
-	}
+    /**
+     * @param UserManager $userManager
+     */
+    public function __construct(UserManager $userManager)
+    {
+        $this->userManager = $userManager;
+    }
 
-	public function handle(FormInterface $form, Request $request)
-	{
-		if (!$request->isMethod('POST')) {
-			return false;
-		}
+    /**
+     * @param  FormInterface $form
+     * @param  Request       $request
+     * @return bool
+     */
+    public function handle(FormInterface $form, Request $request)
+    {
+        if (!$request->isMethod('POST')) {
+            return false;
+        }
 
-		$form->handleRequest($request);
+        $form->handleRequest($request);
 
-		if (!$form->isValid()) {
-			return false;
-		}
+        if (!$form->isValid()) {
+            return false;
+        }
 
-		$this->userManager->createUser($form->getData());
+        $this->userManager->createUser($form->getData());
 
-		return true;
-	}
-
+        return true;
+    }
 }

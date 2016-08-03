@@ -23,9 +23,17 @@ services:
         class: AppBundle\Form\Handler\RegistrationFormHandler
         arguments: ['@user_manager']
 
+    todo_list_form_handler:
+        class: AppBundle\Form\Handler\ToDoListFormHandler
+        arguments: ['@todo_list_manager']
+
     user_manager:
         class: AppBundle\DomainManager\UserManager
         arguments: ['@doctrine.orm.default_entity_manager', '@event_dispatcher']
+
+    todo_list_manager:
+        class: AppBundle\DomainManager\ToDoListManager
+        arguments: ['@doctrine.orm.default_entity_manager']
 
     send_user_confirmation_mail_listener:
         class: AppBundle\EventListener\SendConfirmationMailListener

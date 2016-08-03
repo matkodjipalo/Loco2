@@ -17,23 +17,11 @@ class ToDoListController extends Controller
      */
     public function homepageAction(Request $request)
     {
-        $repo = $this->getDoctrine()->getRepository('AppBundle:ToDoList');
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-
         if ($request->isXMLHttpRequest()) {
-            $orderBy = $request->query->get('orderBy');
-            $orderDirection = $request->query->get('orderDirection');
-
-            $toDoLists = $repo->findByAuthor($user, $orderBy, $orderDirection);
-
-            return $this->render('todo_list/homepage_ajax_part.html.twig', [
-                'toDoLists' => $toDoLists,
-            ]);
+            return $this->renderPartOfHomePage($request);
         }
 
-        return $this->render('todo_list/homepage.html.twig', [
-            'toDoLists' => $repo->findByAuthor($user),
-        ]);
+        return $this->renderWholeHomePage($request);
     }
 
     /**
@@ -41,8 +29,7 @@ class ToDoListController extends Controller
      */
     public function showAction($id, Request $request)
     {
-        $repo = $this->getDoctrine()->getRepository('AppBundle:ToDoList');
-        $toDoList = $repo->findOneById($id);
+        $toDoList = $this->getRepo()->findOneById($id);
 
         if (!$toDoList) {
             throw $this->createNotFoundException();
@@ -61,21 +48,9 @@ class ToDoListController extends Controller
         $toDoList = new ToDoList();
         $form = $this->createForm(ToDoListFormType::class, $toDoList);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $toDoList = $form->getData();
-            $user = $this->get('security.token_storage')->getToken()->getUser();
-            $toDoList->setAuthor($user);
+        $formHandler = $this->get('todo_list_form_handler');
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($toDoList);
-            foreach ($toDoList->getTasks() as $task) {
-                $task->setToDoList($toDoList);
-                $em->persist($task);
-            }
-
-            $em->flush();
-
+        if ($formHandler->handle($form, $request, $this->getUser())) {
             $this->addFlash('success', 'ToDoList created!');
 
             return $this->redirectToRoute('homepage');
@@ -159,5 +134,34 @@ class ToDoListController extends Controller
             'toDoLists' => $repo->findByAuthor($user),
             'search' => ''
         ]);
+    }
+
+    private function renderWholeHomePage(Request $request)
+    {
+        return $this->render('todo_list/homepage.html.twig', [
+            'toDoLists' => $this->getRepo()->findByAuthor($this->getUser()),
+        ]);
+    }
+
+    private function renderPartOfHomePage(Request $request)
+    {
+        $orderBy = $request->query->get('orderBy');
+        $orderDirection = $request->query->get('orderDirection');
+
+        $toDoLists = $this->getRepo()->findByAuthor($this->getUser(), $orderBy, $orderDirection);
+
+        return $this->render('todo_list/homepage_ajax_part.html.twig', [
+            'toDoLists' => $toDoLists,
+        ]);
+    }
+
+    private function getRepo()
+    {
+        return $this->getDoctrine()->getRepository('AppBundle:ToDoList');
+    }
+
+    private function getEntityManager()
+    {
+        return $this->getDoctrine()->getManager();
     }
 }

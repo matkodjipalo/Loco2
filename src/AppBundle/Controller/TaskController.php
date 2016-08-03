@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class TaskController extends Controller
 {
@@ -13,9 +14,7 @@ class TaskController extends Controller
      */
     public function ajaxListAction($toDoListId, Request $request)
     {
-        if (!$request->isXMLHttpRequest()) {
-            throw new \Exception("Error Processing Request", 1);
-        }
+        $this->stopIfNotAjaxRequest($request);
 
         $repo = $this->getDoctrine()->getRepository('AppBundle:Task');
 
@@ -37,9 +36,7 @@ class TaskController extends Controller
      */
     public function deleteAction($id, $toDoListId, Request $request)
     {
-        if (!$request->isXMLHttpRequest()) {
-            throw new \Exception("Error Processing Request", 1);
-        }
+        $this->stopIfNotAjaxRequest($request);
 
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:Task');
@@ -56,5 +53,16 @@ class TaskController extends Controller
             'tasks' => $repo->findBy(['toDoList' => $toDoListId]),
             'search' => ''
         ]);
+    }
+
+    /**
+     * @param  Request $request
+     * @throws BadRequestHttpException U slučaju da se ne radi o AJAX zahtjevu
+     */
+    private function stopIfNotAjaxRequest(Request $request)
+    {
+        if (!$request->isXMLHttpRequest()) {
+            throw new BadRequestHttpException("Error Processing Request", 1);
+        }
     }
 }
