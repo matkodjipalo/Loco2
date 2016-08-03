@@ -2,14 +2,10 @@
 
 namespace AppBundle\Controller;
 
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Type\ToDoListFormType;
-
 use AppBundle\Entity\Task;
 use AppBundle\Entity\ToDoList;
 use Doctrine\Common\Collections\ArrayCollection;

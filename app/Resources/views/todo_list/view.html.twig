@@ -47,41 +47,23 @@
         </div>
     </div>
    {% block js %}
+        <script type="text/javascript" src="/behat_loco/web/js/form/table_action.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
                 $(".container").on('click', '.ajaxDelete', function(e){
                     e.preventDefault();
-                    var th = $(this);
-                    var url = "{{ path('delete_todolist', {id: 'ID'}) }}";
-                    url = url.replace('ID', th.data('todolist-id'));
-                    $.ajax({
-                        type: "GET",
-                        url: url,
-                        success: function(response) {
-                            document.getElementById(("ajax_html_part")).innerHTML = response;
-                        }
-                    });
+                    var currentTableHeader = $(this);
+                    url = url.replace('ID', currentTableHeader.data('todolist-id'));
+                    ajaxDelete(url);
                 });
                 $(".ajaxSort").on('click', function(e){
                     e.preventDefault();
-                    var th = $(this);
-                    var url = "{{ path('task_list_for_todo-list', {'toDoListId': toDoList.id, 'orderBy': "NAME", 'orderDirection': "DIRECTION"})|raw }}";
-                    url = url.replace('NAME', th.attr('name'));
-                    url = url.replace('DIRECTION', th.data('orderingdirection'));
-                    $.ajax({
-                        type: "GET",
-                        url: url,
-                        success: function(response) {
-                            document.getElementById(("ajax_html_part")).innerHTML = response;
-                            if (th.data('orderingdirection') == "DESC") {
-                                th.data('orderingdirection', 'ASC');
-                            } else if (th.data('orderingdirection') == "ASC") {
-                                th.data('orderingdirection', 'DESC');
-                            }
-                        }
-                    });
+                    var currentTableHeader = $(this);
+                    var url = "{{ path('task_list_for_todo-list',{'toDoListId': toDoList.id, 'orderBy': "NAME", 'orderDirection': "DIRECTION"})|raw }}";
+                    url = url.replace('NAME', currentTableHeader.attr('name'));
+                    url = url.replace('DIRECTION', currentTableHeader.data('orderingdirection'));
+                    ajaxSort(url, currentTableHeader);
                 });
-   
             });
         </script>   
     {% endblock %}

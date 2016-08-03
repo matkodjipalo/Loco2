@@ -2,17 +2,9 @@
 
 namespace AppBundle\Controller;
 
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Form\Type\ToDoListFormType;
-
-use AppBundle\Entity\Task;
-use AppBundle\Entity\ToDoList;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class TaskController extends Controller
 {
@@ -26,7 +18,6 @@ class TaskController extends Controller
         }
 
         $repo = $this->getDoctrine()->getRepository('AppBundle:Task');
-        $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $orderBy = $request->query->get('orderBy');
         $orderDirection = $request->query->get('orderDirection');
