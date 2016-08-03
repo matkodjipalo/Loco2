@@ -44,4 +44,27 @@ class ToDoListFormHandler
 
         return true;
     }
+
+    /**
+     * @param  FormInterface $form
+     * @param  Request       $request
+     * @param  User          $user
+     * @return boolean
+     */
+    public function handleEdit(FormInterface $form, Request $request, $originalToDoList)
+    {
+        if (!$request->isMethod('POST')) {
+            return false;
+        }
+
+        $form->handleRequest($request);
+
+        if (!$form->isValid()) {
+            return false;
+        }
+
+        $this->toDoListManager->updateToDoList($form->getData(), $originalToDoList);
+
+        return true;
+    }
 }

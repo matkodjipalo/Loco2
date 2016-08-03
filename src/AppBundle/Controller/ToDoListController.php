@@ -8,7 +8,13 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Type\ToDoListFormType;
 use AppBundle\Entity\Task;
 use AppBundle\Entity\ToDoList;
+
+
+
+
 use Doctrine\Common\Collections\ArrayCollection;
+
+
 
 class ToDoListController extends Controller
 {
@@ -73,37 +79,14 @@ class ToDoListController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $originalTasks = new ArrayCollection();
-
-        // Create an ArrayCollection of the current Tag objects in the database
-        foreach ($toDoList->getTasks() as $task) {
-            $originalTasks->add($task);
-        }
+        $originalTasks = $this->getTasksBeforeEdit($toDoList);
 
         $editForm = $this->createForm(ToDoListFormType::class, $toDoList);
 
-        $editForm->handleRequest($request);
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            // remove the relationship between the tag and the Task
-            foreach ($originalTasks as $task) {
-                if (false === $toDoList->getTasks()->contains($task)) {
-                    $task->setToDoList(null);
-                    $em->remove($task);
-                }
-            }
+        $formHandler = $this->get('todo_list_form_handler');
 
-            $toDoList = $editForm->getData();
-            
-            foreach ($toDoList->getTasks() as $task) {
-                $task->setToDoList($toDoList);
-                $em->persist($task);
-            }
-            $toDoList->removeTasks();
-            $em->persist($toDoList);
-            $em->flush();
-
-            $this->addFlash('success', 'ToDoList edited!');
+        if ($formHandler->handleEdit($editForm, $request, $originalTasks)) {
+             $this->addFlash('success', 'ToDoList edited!');
 
             return $this->redirectToRoute('homepage');
         }
@@ -153,6 +136,18 @@ class ToDoListController extends Controller
         return $this->render('todo_list/homepage_ajax_part.html.twig', [
             'toDoLists' => $toDoLists,
         ]);
+    }
+
+    private function getTasksBeforeEdit($toDoList)
+    {
+        $originalTasks = new ArrayCollection();
+
+        // Create an ArrayCollection of the current Tag objects in the database
+        foreach ($toDoList->getTasks() as $task) {
+            $originalTasks->add($task);
+        }
+
+        return $originalTasks;
     }
 
     private function getRepo()

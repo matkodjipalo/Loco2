@@ -2,7 +2,6 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use AppBundle\Entity\ToDoList;
 use AppBundle\Entity\Task;
