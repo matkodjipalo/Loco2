@@ -11,8 +11,10 @@
             <div class="col-xs-12">
                 <h1>New ToDo List</h1>
                 {{ form_start(toDoListForm) }}
-                {# render the task's only field: description #}
-                {{ form_row(toDoListForm.name) }}
+                <div class="form-group">
+                    {{ form_label(toDoListForm.name, 'Name') }}
+                    {{ form_widget(toDoListForm.name, {'attr': {'class': 'form-control'}}) }}
+                </div>
                 <h3>Tasks</h3>
                 <ul class="tasks" data-prototype="{{ form_widget(toDoListForm.tasks.vars.prototype)|e('html_attr') }}">
                     {# iterate over each existing tag and render its only field: name #}
