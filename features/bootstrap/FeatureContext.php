@@ -16,6 +16,8 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
 {
     use \Behat\Symfony2Extension\Context\KernelDictionary;
 
+    private $currentUser;
+
     /**
      * Initializes context.
      *
@@ -39,7 +41,7 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
     /**
      * @Given there is an user :useremail with password :password
      */
-    public function thereIsAnUserWithPassword($useremail, $password)
+    public function thereIsAUserWithPassword($useremail, $password)
     {
         $user = new \AppBundle\Entity\User();
         $user->setPlainPassword('user');
@@ -50,7 +52,7 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
         $user->setLastLoginDt(new \DateTime());
         $user->setRoles(array('ROLE_USER'));
 
-        $em = $this->getContainer()->get('doctrine')->getManager();
+        $em = $this->getEntityManager();
         $em->persist($user);
         $em->flush();
 
@@ -58,10 +60,68 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
     }
 
     /**
+     * @Given there are :count todo lists
+     */
+    public function thereAreTodoLists($count)
+    {
+        $em = $this->getEntityManager();
+        for ($i=0; $i < $count; $i++) {
+            $toDoList = new \AppBundle\Entity\ToDoList();
+            $toDoList->setName('ToDo List_'.$i);
+            $toDoList->setAuthor($this->currentUser);
+
+            $em->persist($toDoList);
+        }
+
+        $em->flush();
+    }
+
+    /**
+     * @Then I should see :count todo lists
+     */
+    public function iShouldSeeTodoLists($count)
+    {
+        $table = $this->getPage()->find('css', 'table.table');
+        assertNotNull($table, 'Cannot find a table!');
+        assertCount(intval($count), $table->findAll('css', 'tbody tr'));
+    }
+
+    /**
+     * @When I click :linkName
+     */
+    public function iClick($linkName)
+    {
+        $this->getPage()->clickLink($linkName);
+    }
+
+    /**
+     * @Given I am logged in as an user
+     */
+    public function iAmLoggedInAsAnUser()
+    {
+        $this->currentUser = $this->thereIsAUserWithPassword('user@user.com', 'user');
+
+        $this->visitPath('/login');
+
+        $this->getPage()->fillField('Username', 'user@user.com');
+        $this->getPage()->fillField('Password', 'user');
+        $this->getPage()->pressButton('Login');
+    }
+
+
+    /**
      * @return \Behat\Mink\Element\DocumentElement
      */
     private function getPage()
     {
         return $this->getSession()->getPage();
+    }
+
+    /**
+     * @return \Doctrine\ORM\EntityManager
+     */
+    private function getEntityManager()
+    {
+        return $this->getContainer()->get('doctrine.orm.entity_manager');
     }
 }
