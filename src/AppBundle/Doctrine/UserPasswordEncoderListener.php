@@ -14,11 +14,18 @@ class UserPasswordEncoderListener
      */
     private $encoder;
 
+    /**
+     * @param UserPasswordEncoder $encoder
+     */
     public function __construct(UserPasswordEncoder $encoder)
     {
         $this->encoder = $encoder;
     }
 
+    /**
+     * @param  LifecycleEventArgs $event
+     * @return string
+     */
     public function prePersist(LifecycleEventArgs $event)
     {
         $entity = $event->getEntity();
@@ -29,6 +36,9 @@ class UserPasswordEncoderListener
         $this->encodePassword($entity);
     }
 
+    /**
+     * @param User $user
+     */
     private function encodePassword(User $user)
     {
         if ($user->getPlainPassword()) {
