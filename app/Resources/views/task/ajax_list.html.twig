@@ -8,5 +8,6 @@
         <td>{{ task.deadlineDt|date("m/d/Y") }}</td>
         <td>{{ task.isCompleted == 1 ? 'completed' : 'uncompleted' }}</td>    
         <td>{{ task.deadlineDt|time_diff}}</td>
+        <td><a href="#" class="ajaxDelete" data-task-id={{ task.id }}>Delete</a></td> 
     </tr>
 {% endfor %}
