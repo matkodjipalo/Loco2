@@ -24,11 +24,16 @@ class RegistrationController extends Controller
         $formHandler = $this->get('registration_form_handler');
 
         if ($formHandler->handle($form, $request)) {
+            $this->addFlash(
+                'success',
+                'Confirmation mail was sent to you. Please confirm your account than log in.'
+            );
+
             return $this->redirectToRoute('homepage');
         }
 
         return $this->render(
-            'registration/register.html.twig',
+            'auth/register.html.twig',
             array('form' => $form->createView())
         );
     }

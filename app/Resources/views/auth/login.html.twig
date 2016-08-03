@@ -12,7 +12,7 @@
 
             <form action="{{ path('login') }}" method="POST">
                 <div class="form-group">
-                    <label for="inputUsername">Username</label>
+                    <label for="inputUsername">E-mail</label>
                     <input class="form-control" type="text" id="inputUsername" placeholder="Username" name="_username" value="{{ last_username }}">
                 </div>
                 <div class="form-group">
@@ -24,4 +24,10 @@
             </form>
         </div>
     </section>
+    <div class="col-sm-8 col-sm-offset-2">
+        <br>
+        <p class="text-center">
+            Or, if you are not registered user, you can <a href="{{ path('user_registration') }}">sign up</a>.
+        </p>
+    </div>
 {% endblock %}
