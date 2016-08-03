@@ -12,16 +12,20 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadFixtures extends ContainerAwareFixture
 {
+    /**
+     * @param  ObjectManager $manager [description]
+     */
     public function load(ObjectManager $manager)
     {
-        $defaultAuthor = $this->loadUsers($manager);
+        $defaultAuthor = $this->loadUser($manager);
         $this->loadToDoLists($defaultAuthor, $manager);
     }
 
     /**
-     * Loads some dummy users
+     * @param  EntityManager $em [description]
+     * @return User]
      */
-    private function loadUsers(EntityManager $em)
+    private function loadUser(EntityManager $em)
     {
         $em->createQuery('DELETE FROM AppBundle:Product');
 
@@ -40,6 +44,10 @@ class LoadFixtures extends ContainerAwareFixture
         return $user;
     }
 
+    /**
+     * @param  User          $defaultAuthor
+     * @param  EntityManager $em
+     */
     private function loadToDoLists(User $defaultAuthor, EntityManager $em)
     {
         $em->createQuery('DELETE FROM AppBundle:ToDoList');
@@ -62,6 +70,10 @@ class LoadFixtures extends ContainerAwareFixture
         $em->flush();
     }
 
+    /**
+     * @param  ToDoList      $toDoList
+     * @param  EntityManager $em
+     */
     private function loadTasks(ToDoList $toDoList, EntityManager $em)
     {
         $date = new \DateTime();
