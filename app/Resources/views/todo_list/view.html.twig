@@ -50,14 +50,14 @@
         <script type="text/javascript" src="/behat_loco/web/js/form/table_action.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
-                $(".container").on('click', '.ajaxDelete', function(e){
+                $(".container").on('click', '.ajaxDelete', function(e) {
                     e.preventDefault();
                     var currentTableHeader = $(this);
                     var url = "{{ path('delete_task_from_todo-list', {'toDoListId': toDoList.id, 'id': "ID"})|raw }}";
                     url = url.replace('ID', currentTableHeader.data('task-id'));
                     ajaxDelete(url);
                 });
-                $(".ajaxSort").on('click', function(e){
+                $(".ajaxSort").on('click', function(e) {
                     e.preventDefault();
                     var currentTableHeader = $(this);
                     var url = "{{ path('task_list_for_todo-list', {'toDoListId': toDoList.id, 'orderBy': "NAME", 'orderDirection': "DIRECTION"})|raw }}";

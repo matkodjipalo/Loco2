@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2">
             {% if toDoLists %}
-                <h2>Here are your todo lists:</h2>
+                <h2>Here are your lists:</h2>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -25,6 +25,9 @@
                         {% include 'todo_list/homepage_ajax_part.html.twig' %}
                     </tbody>
                 </table>
+                <p class="text-right">
+                    <a href="{{ path('new_todolist') }}">New ToDo List</a>
+                </p>
             {% else %}
                 <p class="text-center">
                     <br><br><br>

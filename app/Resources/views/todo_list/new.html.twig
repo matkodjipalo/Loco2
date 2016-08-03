@@ -42,7 +42,7 @@
                 $collectionHolder = $('ul.tasks');
 
                 // add a delete link to all of the existing tag form li elements
-                $collectionHolder.find('li').each(function() {
+                $collectionHolder.find('ul.tasks').each(function() {
                     addTagFormDeleteLink($(this));
                 });
 
