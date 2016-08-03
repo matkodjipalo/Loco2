@@ -12,7 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadFixtures extends ContainerAwareFixture
 {
     /**
-     * @param  ObjectManager $manager [description]
+     * @param  ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
@@ -21,7 +21,7 @@ class LoadFixtures extends ContainerAwareFixture
     }
 
     /**
-     * @param  EntityManager $em [description]
+     * @param  EntityManager $em
      * @return User]
      */
     private function loadUser(EntityManager $em)
