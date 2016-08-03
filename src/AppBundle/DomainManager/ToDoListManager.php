@@ -29,6 +29,10 @@ class ToDoListManager
         $this->doPersist($toDoList);
     }
 
+    /**
+     * @param  ToDoList        $modifiedToDoList
+     * @param  ArrayCollection $originalTasks
+     */
     public function updateToDoList(ToDoList $modifiedToDoList, ArrayCollection $originalTasks)
     {
         // uklanja vezu todo liste i taska ako je bilo nekakve promjene u tasku

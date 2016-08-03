@@ -11,15 +11,25 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SendConfirmationMailListener implements EventSubscriberInterface
 {
+    /** @var \Swift_Mailer */
     private $mailer;
+
+    /** @var Router */
     private $router;
 
+    /**
+     * @param \Swift_Mailer $mailer
+     * @param Router        $router
+     */
     public function __construct(\Swift_Mailer $mailer, Router $router)
     {
         $this->mailer = $mailer;
         $this->router = $router;
     }
 
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return array(
@@ -27,11 +37,17 @@ class SendConfirmationMailListener implements EventSubscriberInterface
         );
     }
 
+    /**
+     * @param UserEvent $event
+     */
     public function onNewUser(UserEvent $event)
     {
         $this->sendConfirmationEmail($event->getUser());
     }
 
+    /**
+     * @param User $user
+     */
     private function sendConfirmationEmail(User $user)
     {
         $mailBody = $this->createConfirmationMailBody($user);
@@ -45,6 +61,10 @@ class SendConfirmationMailListener implements EventSubscriberInterface
         $this->mailer->send($message);
     }
 
+    /**
+     * @param  User   $user
+     * @return string
+     */
     private function createConfirmationMailBody(User $user)
     {
         $body = 'Hello '.$user->getFirstName().' '.$user->getLastName().'! \r\n\r\n';

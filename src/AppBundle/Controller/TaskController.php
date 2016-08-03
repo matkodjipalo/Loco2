@@ -51,7 +51,6 @@ class TaskController extends Controller
 
         return $this->render('task/ajax_list.html.twig', [
             'tasks' => $repo->findBy(['toDoList' => $toDoListId]),
-            'search' => ''
         ]);
     }
 

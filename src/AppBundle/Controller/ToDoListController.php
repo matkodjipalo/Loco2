@@ -8,13 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Type\ToDoListFormType;
 use AppBundle\Entity\Task;
 use AppBundle\Entity\ToDoList;
-
-
-
-
 use Doctrine\Common\Collections\ArrayCollection;
-
-
 
 class ToDoListController extends Controller
 {
@@ -56,7 +50,7 @@ class ToDoListController extends Controller
 
         $formHandler = $this->get('todo_list_form_handler');
 
-        if ($formHandler->handle($form, $request, $this->getUser())) {
+        if ($formHandler->handleCreate($form, $request, $this->getUser())) {
             $this->addFlash('success', 'ToDoList created!');
 
             return $this->redirectToRoute('homepage');
@@ -119,6 +113,12 @@ class ToDoListController extends Controller
         ]);
     }
 
+    /**
+     * Vraća cijelu naslovnu stranicu
+     *
+     * @param  Request $request
+     * @return string
+     */
     private function renderWholeHomePage(Request $request)
     {
         return $this->render('todo_list/homepage.html.twig', [
@@ -126,6 +126,12 @@ class ToDoListController extends Controller
         ]);
     }
 
+    /**
+     * Vraća dio naslovne stranice (kod AJAX poziva)
+     *
+     * @param  Request $request
+     * @return string
+     */
     private function renderPartOfHomePage(Request $request)
     {
         $orderBy = $request->query->get('orderBy');
@@ -138,7 +144,11 @@ class ToDoListController extends Controller
         ]);
     }
 
-    private function getTasksBeforeEdit($toDoList)
+    /**
+     * @param  ToDoList $toDoList
+     * @return ArrayCollection
+     */
+    private function getTasksBeforeEdit(ToDoList $toDoList)
     {
         $originalTasks = new ArrayCollection();
 
@@ -150,11 +160,17 @@ class ToDoListController extends Controller
         return $originalTasks;
     }
 
+    /**
+     * @return AppBundle\Entity\ToDoListRepository
+     */
     private function getRepo()
     {
         return $this->getDoctrine()->getRepository('AppBundle:ToDoList');
     }
 
+    /**
+     * @return Doctrine\ORM\EntityManager
+     */
     private function getEntityManager()
     {
         return $this->getDoctrine()->getManager();

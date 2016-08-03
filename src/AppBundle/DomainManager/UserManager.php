@@ -28,7 +28,7 @@ class UserManager
      * Zapisuje korisnika u bazu,
      * te šalje obavijest pretplatnicima o tome
      *
-     * @param  User $user
+     * @param User $user
      */
     public function createUser(User $user)
     {
@@ -44,7 +44,7 @@ class UserManager
     /**
      * Aktivira korisnika, te šalje obavijest pretplatnicima o tome
      *
-     * @param  User $user
+     * @param User $user
      */
     public function enableUser(User $user)
     {
