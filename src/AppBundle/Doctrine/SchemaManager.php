@@ -13,26 +13,24 @@ use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Handles rebuilding our database tables
+ * Rebuilda tablice u bazi
  */
 class SchemaManager
 {
+    /** @var EntityManager */
     private $em;
 
+    /** @var EntityManager */
     private $container;
 
-    public function __construct(EntityManager $em, ContainerInterface $container)
+    /**
+     * @param EntityManager $em
+     * @param EntityManager $container
+     */
+    public function __construct(EntityManager $em, EntityManager $container)
     {
         $this->em = $em;
         $this->container = $container;
-    }
-
-    public function rebuildSchema()
-    {
-        $metadatas = $this->em->getMetadataFactory()->getAllMetadata();
-        $tool = new SchemaTool($this->em);
-        $tool->dropSchema($metadatas);
-        $tool->updateSchema($metadatas, false);
     }
 
     public function loadFixtures()
