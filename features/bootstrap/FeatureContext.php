@@ -64,16 +64,15 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
      */
     public function thereAreTodoLists($count)
     {
-        $em = $this->getEntityManager();
         for ($i=0; $i < $count; $i++) {
             $toDoList = new \AppBundle\Entity\ToDoList();
             $toDoList->setName('ToDo List_'.$i);
             $toDoList->setAuthor($this->currentUser);
 
-            $em->persist($toDoList);
+            $this->getEntityManager()->persist($toDoList);
         }
 
-        $em->flush();
+         $this->getEntityManager()->flush();
     }
 
     /**
@@ -106,6 +105,31 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
         $this->getPage()->fillField('Username', 'user@user.com');
         $this->getPage()->fillField('Password', 'user');
         $this->getPage()->pressButton('Login');
+    }
+
+    /**
+     * Pauses the scenario until the user presses a key. Useful when debugging a scenario.
+     *
+     * @Then (I )break
+     */
+    public function iPutABreakpoint()
+    {
+        fwrite(STDOUT, "\033[s    \033[93m[Breakpoint] Press \033[1;93m[RETURN]\033[0;93m to continue...\033[0m");
+        while (fgets(STDIN, 1024) == '') {}
+        fwrite(STDOUT, "\033[u");
+
+        return;
+    }
+
+    /**
+     * @When I wait for a :time seconds
+     */
+    public function iWaitForASeconds($time)
+    {
+        $this->getSession()->wait(
+            $time*1000,
+            '(0 === jQuery.active)'
+        );
     }
 
 

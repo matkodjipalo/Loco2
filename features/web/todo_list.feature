@@ -16,3 +16,14 @@ Feature: ToDo List Dashboard
     And I fill in "Name" with "Veloci-chew toy"
     And I press "Save"
     Then I should see "ToDoList created!"
+
+  @javascript
+  Scenario: Delete one todo list
+    Given I am logged in as an user
+    And there are 3 todo lists
+    And I am on "/"
+    #And show last response
+    When I click "Delete"
+    And I wait for a 3 seconds
+    #And show last response
+    Then I should see 2 todo lists
