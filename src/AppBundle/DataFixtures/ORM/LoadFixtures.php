@@ -36,6 +36,7 @@ class LoadFixtures extends ContainerAwareFixture
         $user->setRegistrationDt(new \DateTime());
         $user->setLastLoginDt(new \DateTime());
         $user->setRoles(array('ROLE_USER'));
+        $user->setIsActive(true);
 
         $em->persist($user);
         $em->flush();

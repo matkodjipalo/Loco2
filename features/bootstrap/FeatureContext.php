@@ -51,6 +51,7 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
         $user->setRegistrationDt(new \DateTime());
         $user->setLastLoginDt(new \DateTime());
         $user->setRoles(array('ROLE_USER'));
+        $user->setIsActive(true);
 
         $em = $this->getEntityManager();
         $em->persist($user);
