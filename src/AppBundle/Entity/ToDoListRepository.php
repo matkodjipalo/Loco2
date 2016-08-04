@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityRepository;
 class ToDoListRepository extends EntityRepository
 {
     /**
-     * @return Product[]
+     * @return ToDoList[]
      */
     public function findAllPublished()
     {
@@ -16,6 +16,12 @@ class ToDoListRepository extends EntityRepository
         ));
     }
 
+    /**
+     * @param  User  $author
+     * @param  mixed $orderBy
+     * @param  mixed $orderDirection
+     * @return ToDoList[]
+     */
     public function findByAuthor(User $author, $orderBy = false, $orderDirection = false)
     {
         if (!$orderBy) {
@@ -28,22 +34,5 @@ class ToDoListRepository extends EntityRepository
             ['author' => $author->getEmail()],
             [$orderBy => $orderDirection]
         );
-    }
-
-    /**
-     * @param string $term
-     * @return Product[]
-     */
-    public function search($term)
-    {
-        if (!$term) {
-            return $this->findAll();
-        }
-
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.name LIKE :term')
-            ->setParameter('term', '%'.$term.'%')
-            ->getQuery()
-            ->execute();
     }
 }

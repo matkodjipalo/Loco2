@@ -166,11 +166,4 @@ class ToDoList
     {
         return $this->tasks;
     }
-
-    public function removeTasks()
-    {
-        foreach ($this->tasks as $task) {
-            $this->removeTask($task);
-        }
-    }
 }

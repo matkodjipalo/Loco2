@@ -2,11 +2,11 @@
 
 namespace AppBundle\DomainManager;
 
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use AppBundle\Entity\ToDoList;
 use AppBundle\Entity\ToTask;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ToDoListManager
 {
@@ -30,8 +30,8 @@ class ToDoListManager
     }
 
     /**
-     * @param  ToDoList        $modifiedToDoList
-     * @param  ArrayCollection $originalTasks
+     * @param ToDoList        $modifiedToDoList
+     * @param ArrayCollection $originalTasks
      */
     public function updateToDoList(ToDoList $modifiedToDoList, ArrayCollection $originalTasks)
     {
@@ -58,7 +58,7 @@ class ToDoListManager
     }
 
     /**
-     * @param  ToDoList $toDoList
+     * @param ToDoList $toDoList
      */
     private function doPersist(ToDoList $toDoList)
     {

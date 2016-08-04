@@ -12,7 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadFixtures extends ContainerAwareFixture
 {
     /**
-     * @param  ObjectManager $manager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
@@ -22,7 +22,7 @@ class LoadFixtures extends ContainerAwareFixture
 
     /**
      * @param  EntityManager $em
-     * @return User]
+     * @return User
      */
     private function loadUser(EntityManager $em)
     {
@@ -52,7 +52,7 @@ class LoadFixtures extends ContainerAwareFixture
         $em->createQuery('DELETE FROM AppBundle:ToDoList');
 
         $toDoList1 = new ToDoList();
-        $toDoList1->setName('Kindle Fire HD 7');
+        $toDoList1->setName('Smoubojstvo');
         $toDoList1->setAuthor($defaultAuthor);
         $toDoList1->setCreatedAt(new \DateTime());
 
@@ -61,8 +61,6 @@ class LoadFixtures extends ContainerAwareFixture
         $toDoList2->setAuthor($defaultAuthor);
         $toDoList2->setCreatedAt(new \DateTime());
 
-        
-
         $em->persist($toDoList1);
         $em->persist($toDoList2);
         $this->loadTasks($toDoList2, $em);
@@ -70,8 +68,8 @@ class LoadFixtures extends ContainerAwareFixture
     }
 
     /**
-     * @param  ToDoList      $toDoList
-     * @param  EntityManager $em
+     * @param ToDoList      $toDoList
+     * @param EntityManager $em
      */
     private function loadTasks(ToDoList $toDoList, EntityManager $em)
     {
@@ -80,7 +78,7 @@ class LoadFixtures extends ContainerAwareFixture
         $task = new Task();
         $task->setToDoList($toDoList);
         $task->setDeadlineDt($date->add(new \DateInterval('P10D')));
-        $task->setName('Buđenje ujutro u 7');
+        $task->setName('Posjeta baki');
         $task->setPriority("HIGH");
         $task->setIsCompleted(true);
 

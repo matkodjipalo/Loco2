@@ -2,11 +2,11 @@
 
 namespace AppBundle\DomainManager;
 
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use AppBundle\Entity\User;
 use AppBundle\Event\UserEvents;
 use AppBundle\Event\UserEvent;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class UserManager
 {

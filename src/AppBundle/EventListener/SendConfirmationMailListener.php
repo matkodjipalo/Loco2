@@ -2,10 +2,10 @@
 
 namespace AppBundle\EventListener;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use AppBundle\Event\UserEvents;
 use AppBundle\Event\UserEvent;
 use AppBundle\Entity\User;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 

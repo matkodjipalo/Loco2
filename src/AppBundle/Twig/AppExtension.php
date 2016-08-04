@@ -2,8 +2,6 @@
 
 namespace AppBundle\Twig;
 
-use AppBundle\Entity\ToDoList;
-
 class AppExtension extends \Twig_Extension
 {
     public function getFilters()
@@ -13,6 +11,12 @@ class AppExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * Filtrira nedovršene taskove
+     *
+     * @param  \AppBundle\Entity\Task[] $tasks
+     * @return array
+     */
     public function uncompletedTaskFilter($tasks = [])
     {
         $uncompletedTasks = [];

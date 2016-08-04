@@ -2,13 +2,10 @@
 
 namespace AppBundle\Doctrine;
 
-use AppBundle\DataFixtures\ORM\LoadFixtures;
-use AppBundle\Entity\Product;
 use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -20,14 +17,14 @@ class SchemaManager
     /** @var EntityManager */
     private $em;
 
-    /** @var EntityManager */
+    /** @var ContainerInterface */
     private $container;
 
     /**
      * @param EntityManager $em
-     * @param EntityManager $container
+     * @param ContainerInterface $container
      */
-    public function __construct(EntityManager $em, EntityManager $container)
+    public function __construct(EntityManager $em, ContainerInterface $container)
     {
         $this->em = $em;
         $this->container = $container;

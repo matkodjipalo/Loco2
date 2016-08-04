@@ -21,7 +21,8 @@ class UserRepository extends EntityRepository implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        $user = $this->findOneBy([
+        $user = $this->findOneBy(
+            [
                 'email' => $username,
                 'isActive' => true
             ]
