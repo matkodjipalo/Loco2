@@ -86,13 +86,14 @@ class SendConfirmationMailListener implements EventSubscriberInterface
      */
     private function getConfirmationUrl(User $user)
     {
+        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
         return $this->router
                     ->generate(
                         'user_registration_confirmation',
                         [
                             'confirmationCode' => $user->getConfirmationCode(),
-                            UrlGeneratorInterface::ABSOLUTE_URL
-                        ]
+                        ],
+                        UrlGeneratorInterface::ABSOLUTE_URL
                     );
     }
 }

@@ -26,7 +26,7 @@ class RegistrationController extends Controller
         if ($formHandler->handle($form, $request)) {
             $this->addFlash(
                 'success',
-                'Confirmation mail was sent to you. Please confirm your account than log in.'
+                'Confirmation mail was sent to you. Please confirm your account, than log in.'
             );
 
             return $this->redirectToRoute('homepage');
