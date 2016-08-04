@@ -52,7 +52,7 @@ class ToDoListFormHandler
             return false;
         }
 
-        $this->toDoListManager->updateToDoList($form->getData(), $originalToDoList);
+        $this->toDoListManager->updateToDoList($form->getData(), $originalTasks);
 
         return true;
     }

@@ -5,6 +5,7 @@
     <td>{{ toDoList.tasks|length }}</td>    
     <td>{{ toDoList.tasks|uncompletedTask|length }}</td> 
     <td><a href="{{ path('view_todolist', {'id': toDoList.id}) }}">View</a></td>  
+    <td><a href="{{ path('edit_todolist', {'id': toDoList.id}) }}">Edit</a></td>  
     <td><a href="#" class="ajaxDelete" data-todolist-id={{ toDoList.id }}>Delete</a></td>  
 </tr>
 {% endfor %}

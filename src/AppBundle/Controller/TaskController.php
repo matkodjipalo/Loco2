@@ -61,7 +61,7 @@ class TaskController extends Controller
     private function stopIfNotAjaxRequest(Request $request)
     {
         if (!$request->isXMLHttpRequest()) {
-            throw new BadRequestHttpException("Error Processing Request", 1);
+            throw new BadRequestHttpException();
         }
     }
 }

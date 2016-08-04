@@ -19,9 +19,11 @@
                 <ul class="tasks" data-prototype="{{ form_widget(toDoListForm.tasks.vars.prototype)|e('html_attr') }}">
                     {# iterate over each existing tag and render its only field: name #}
                     {% for task in toDoListForm.tasks %}
-                        <li>{{ form_row(task.name) }}</li>
-                        <li>{{ form_row(task.priority) }}</li>
-                        <li>{{ form_row(task.deadlineDt) }}</li>
+                        <div class="single_task">
+                            <li>{{ form_row(task.name) }}</li>
+                            <li>{{ form_row(task.priority) }}</li>
+                            <li>{{ form_row(task.deadlineDt) }}</li>
+                        </div>
                     {% endfor %}
                 </ul>
                 <button type="submit" class="btn btn-primary">Save</button>
@@ -29,83 +31,10 @@
             </div>
         </div>
     </div>
-    {% block javascripts1 %}
-        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
-        <script type="text/javascript">
-            var $collectionHolder;
+{% endblock %}
 
-            // setup an "add a task" link
-            var $addTaskLink = $('<a href="#" class="add_task_link">Add a task</a>');
-            var $newLinkLi = $('<li></li>').append($addTaskLink);
-
-            jQuery(document).ready(function() {
-
-                // Get the ul that holds the collection of tags
-                $collectionHolder = $('ul.tasks');
-
-                // add a delete link to all of the existing tag form li elements
-                $collectionHolder.find('ul.tasks').each(function() {
-                    addTagFormDeleteLink($(this));
-                });
-
-                // add the "add a task" anchor and li to the tags ul
-                $collectionHolder.append($newLinkLi);
-
-                // count the current form inputs we have (e.g. 2), use that as the new
-                // index when inserting a new item (e.g. 2)
-                $collectionHolder.data('index', $collectionHolder.find(':input').length);
-
-                $addTaskLink.on('click', function(e) {
-                    // prevent the link from creating a "#" on the URL
-                    e.preventDefault();
-
-                    // add a new tag form (see next code block)
-                    addTaskForm($collectionHolder, $newLinkLi);
-                });
-            });
-
-            $('body').on('focus', '.js-datepicker', function() {
-                $('.js-datepicker').datepicker({
-                    format: 'yyyy-mm-dd'
-                });
-            });
-
-
-            function addTaskForm($collectionHolder, $newLinkLi) {
-                // Get the data-prototype explained earlier
-                var prototype = $collectionHolder.data('prototype');
-
-                // get the new index
-                var index = $collectionHolder.data('index');
-
-                // Replace '__name__' in the prototype's HTML to
-                // instead be a number based on how many items we have
-                var newForm = prototype.replace(/__name__/g, index);
-
-                // increase the index with one for the next item
-                $collectionHolder.data('index', index + 1);
-
-                // Display the form in the page in an li, before the "add a task" link li
-                var $newFormLi = $('<li></li>').append(newForm);
-                $newLinkLi.before($newFormLi);
-
-                // add a delete link to the new form
-                addTagFormDeleteLink($newFormLi);
-            }
-
-            function addTagFormDeleteLink($tagFormLi) {
-                var $removeFormA = $('<a href="#">Delete this task</a>');
-                $tagFormLi.append($removeFormA);
-
-                $removeFormA.on('click', function(e) {
-                    // prevent the link from creating a "#" on the URL
-                    e.preventDefault();
-
-                    // remove the li for the tag form
-                    $tagFormLi.remove();
-                });
-            }
-
-        </script>
-    {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="/js/form/dynamically_task_handling.js"></script>
 {% endblock %}
