@@ -10,9 +10,22 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
 class UserRepository extends EntityRepository implements UserProviderInterface
 {
+    /**
+     * Vraća aktivnog korisnika na temelju korisničkog imena.
+     *
+     * Korisničko ime u slučaju ove aplikacije je korisnikov email.
+     *
+     * @param  $username
+     * @return \App\Bundle\User
+     * @throws UsernameNotFoundException
+     */
     public function loadUserByUsername($username)
     {
-        $user = $this->findOneBy(array('email' => $username));
+        $user = $this->findOneBy([
+                'email' => $username,
+                'isActive' => true
+            ]
+        );
 
         if (!$user) {
             throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
