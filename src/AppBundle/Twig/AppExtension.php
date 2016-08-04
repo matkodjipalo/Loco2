@@ -13,6 +13,12 @@ class AppExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * Iz niza taskova vraća nedovršene
+     *
+     * @param  array  $tasks
+     * @return array
+     */
     public function uncompletedTaskFilter($tasks = [])
     {
         $uncompletedTasks = [];
