@@ -6,6 +6,8 @@
             <h1>Registration</h1>
 
             {{ form_start(form) }}
+            	{{ form_errors(form) }}
+
 			    <div class="form-group">
 			    	{{ form_label(form.firstName, 'First Name') }}
 			    	{{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
@@ -16,14 +18,17 @@
 			    <div class="form-group">
 			    	{{ form_label(form.email, 'Email') }}
 			    	{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+			    	{{ form_errors(form.email) }}
 			    </div>
 			    <div class="form-group">
 			    	{{ form_label(form.plainPassword.first, 'Password') }}
 			    	{{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+			    	{{ form_errors(form.plainPassword.first) }}
 			    </div>
 			    <div class="form-group">
 			    	{{ form_label(form.plainPassword.second, 'Repeat Password') }}
 			    	{{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+			    	{{ form_errors(form.plainPassword.second) }}
 			    </div>
 
 			    <button type="submit">Register!</button>
