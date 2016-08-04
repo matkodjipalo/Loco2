@@ -18,6 +18,10 @@ class RegistrationController extends Controller
      */
     public function registerAction(Request $request)
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('homepage');
+        }
+
         $user = new User();
         $form = $this->createForm(UserFormType::class, $user);
 
