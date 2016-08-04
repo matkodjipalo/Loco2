@@ -58,7 +58,7 @@ class SendConfirmationMailListener implements EventSubscriberInterface
 
         $message = \Swift_Message::newInstance()
         ->setSubject('Confirm account')
-        ->setFrom('noreply@matthias.com')
+        ->setFrom('info@matkodjipalo.com')
         ->setTo($user->getEmail())
         ->setBody($mailBody);
 
@@ -86,7 +86,6 @@ class SendConfirmationMailListener implements EventSubscriberInterface
      */
     private function getConfirmationUrl(User $user)
     {
-        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
         return $this->router
                     ->generate(
                         'user_registration_confirmation',
