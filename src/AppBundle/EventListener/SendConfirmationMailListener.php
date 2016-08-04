@@ -17,14 +17,18 @@ class SendConfirmationMailListener implements EventSubscriberInterface
     /** @var Router */
     private $router;
 
+    /** @var \Twig_Environment */
+    private $twig;
+
     /**
      * @param \Swift_Mailer $mailer
      * @param Router        $router
      */
-    public function __construct(\Swift_Mailer $mailer, Router $router)
+    public function __construct(\Swift_Mailer $mailer, Router $router, \Twig_Environment $twig)
     {
         $this->mailer = $mailer;
         $this->router = $router;
+        $this->twig = $twig;
     }
 
     /**
@@ -50,7 +54,7 @@ class SendConfirmationMailListener implements EventSubscriberInterface
      */
     private function sendConfirmationEmail(User $user)
     {
-        $mailBody = $this->createConfirmationMailBody($user);
+        $mailBody = $this->renderConfirmationMailBody($user);
 
         $message = \Swift_Message::newInstance()
         ->setSubject('Confirm account')
@@ -62,20 +66,33 @@ class SendConfirmationMailListener implements EventSubscriberInterface
     }
 
     /**
-     * @param  User   $user
+     * @param  User $user
      * @return string
      */
-    private function createConfirmationMailBody(User $user)
+    private function renderConfirmationMailBody(User $user)
     {
-        $body = 'Hello '.$user->getFirstName().' '.$user->getLastName().'! \r\n\r\n';
-        $body .= 'To finish activating your account - please visit ';
-        $body .= '<a href="'.urlencode($this->router->generate('user_registration_confirmation', array(
-                        'confirmationCode' => $user->getConfirmationCode(),
-                         UrlGeneratorInterface::ABSOLUTE_URL
-                    ))
-                ).'">LINK</a>';
-        $body .= ' \r\n\r\nRegards,<br>Locastic.hr';
+        return $this->twig->render(
+            'email/registration.html.twig',
+            array(
+                'user' => $user,
+                'confirmationUrl' => $this->getConfirmationUrl($user)
+            )
+        );
+    }
 
-        return $body;
+    /**
+     * @param  User user
+     * @return string
+     */
+    private function getConfirmationUrl(User $user)
+    {
+        return $this->router
+                    ->generate(
+                        'user_registration_confirmation',
+                        [
+                            'confirmationCode' => $user->getConfirmationCode(),
+                            UrlGeneratorInterface::ABSOLUTE_URL
+                        ]
+                    );
     }
 }

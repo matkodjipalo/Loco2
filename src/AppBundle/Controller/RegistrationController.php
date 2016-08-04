@@ -56,7 +56,11 @@ class RegistrationController extends Controller
         }
 
         $this->get('user_manager')->enableUser($user);
+        $this->addFlash(
+            'success',
+            'Your account is enabled, please log in.'
+        );
 
-        return $this->redirectToRoute('homepage');
+        return $this->redirectToRoute('login');
     }
 }

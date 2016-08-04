@@ -37,7 +37,7 @@ services:
 
     send_user_confirmation_mail_listener:
         class: AppBundle\EventListener\SendConfirmationMailListener
-        arguments: ['@mailer', '@router']
+        arguments: ['@mailer', '@router', '@twig']
         tags:
             - { name: kernel.event_subscriber }
 

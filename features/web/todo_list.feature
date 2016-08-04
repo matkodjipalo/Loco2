@@ -3,15 +3,16 @@ Feature: ToDo List Dashboard
   As a user
   I need to be able to add/edit/delete todo lists
 
-  Scenario: List current todo lists
+  Background:
     Given I am logged in as an user
-    And there are 3 todo lists
+
+  Scenario: List current todo lists
+    Given there are 3 todo lists
     And I am on "/"
     Then I should see 3 todo lists
 
   Scenario: Add a new todo list
-    Given I am logged in as an user
-    And I am on "/"
+    Given I am on "/"
     When I click "New ToDo List"
     And I fill in "Name" with "Veloci-chew toy"
     And I press "Save"
@@ -19,8 +20,7 @@ Feature: ToDo List Dashboard
 
   @javascript
   Scenario: Delete one todo list
-    Given I am logged in as an user
-    And there are 3 todo lists
+    Given there are 3 todo lists
     And I am on "/"
     #And show last response
     When I click "Delete"
