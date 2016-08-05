@@ -14,9 +14,10 @@ Feature: ToDo List Dashboard
   Scenario: Add a new todo list
     Given I am on "/"
     When I click "New ToDo List"
-    And I fill in "Name" with "Veloci-chew toy"
+    And I fill in "Name" with "Very new todo list"
     And I press "Save"
     Then I should see "ToDoList created!"
+    And I should see "Very new todo list"
 
   @javascript
   Scenario: Delete one todo list

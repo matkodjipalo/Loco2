@@ -1,5 +1,5 @@
 Feature: Registration
-  In order to be able to access site for managing todo list
+  In order to be able to access site
   As a user
   I need to be able to register for a new account
 
