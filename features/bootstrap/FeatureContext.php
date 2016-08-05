@@ -38,14 +38,16 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
         $purger->purge();
     }
 
+
+
     /**
-     * @Given there is an user :useremail with password :password
+     * @Given there is site user :username with password :password
      */
-    public function thereIsAUserWithPassword($useremail, $password)
+    public function thereIsSiteUserWithPassword($username, $password)
     {
         $user = new \AppBundle\Entity\User();
-        $user->setPlainPassword('user');
-        $user->setEmail('user@user.com');
+        $user->setPlainPassword($password);
+        $user->setEmail($username);
         $user->setFirstName('Adam');
         $user->setLastName('Adminić');
         $user->setRegistrationDt(new \DateTime());
@@ -56,7 +58,6 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
         $em = $this->getEntityManager();
         $em->persist($user);
         $em->flush();
-
         return $user;
     }
 
@@ -99,7 +100,7 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
      */
     public function iAmLoggedInAsAnUser()
     {
-        $this->currentUser = $this->thereIsAUserWithPassword('user@user.com', 'user');
+        $this->currentUser = $this->thereIsSiteUserWithPassword('user@user.com', 'user');
 
         $this->visitPath('/login');
 
