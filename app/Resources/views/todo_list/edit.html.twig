@@ -25,6 +25,13 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $('body').on('focus', '.js-datepicker', function() {
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block javascripts %}

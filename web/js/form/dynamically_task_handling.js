@@ -30,12 +30,6 @@ jQuery(document).ready(function() {
     });
 });
 
-$('body').on('focus', '.js-datepicker', function() {
-    $('.js-datepicker').datepicker({
-        format: 'yyyy-mm-dd'
-    });
-});
-
 
 function addTaskForm($collectionHolder, $newLinkLi) {
     // Get the data-prototype explained earlier
