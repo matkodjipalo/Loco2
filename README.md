@@ -1,4 +1,1 @@
-behat_loco
-==========
-
-A Symfony project created on July 29, 2016, 10:49 am.
+A simple todo list implemented with Symfony 3.
