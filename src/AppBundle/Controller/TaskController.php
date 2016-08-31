@@ -55,7 +55,8 @@ class TaskController extends Controller
     }
 
     /**
-     * @param  Request $request
+     * @param Request $request
+     *
      * @throws BadRequestHttpException U slučaju da se ne radi o AJAX zahtjevu
      */
     private function stopIfNotAjaxRequest(Request $request)

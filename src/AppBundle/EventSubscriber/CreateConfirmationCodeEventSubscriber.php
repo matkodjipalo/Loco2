@@ -11,12 +11,12 @@ class CreateConfirmationCodeEventSubscriber implements EventSubscriber
     public function getSubscribedEvents()
     {
         return array(
-            'prePersist'
+            'prePersist',
         );
     }
 
     /**
-     * @param  LifecycleEventArgs $event
+     * @param LifecycleEventArgs $event
      */
     public function prePersist(LifecycleEventArgs $event)
     {
@@ -30,7 +30,7 @@ class CreateConfirmationCodeEventSubscriber implements EventSubscriber
 
     /**
      * Generira konfirmacijski kod koji služi korisniku
-     * da potvrdi svoj račun preko emaila
+     * da potvrdi svoj račun preko emaila.
      *
      * @param User $user
      */

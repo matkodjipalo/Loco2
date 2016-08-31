@@ -12,14 +12,15 @@ class ToDoListRepository extends EntityRepository
     public function findAllPublished()
     {
         return $this->findBy(array(
-            'isPublished' => true
+            'isPublished' => true,
         ));
     }
 
     /**
-     * @param  User  $author
-     * @param  mixed $orderBy
-     * @param  mixed $orderDirection
+     * @param User  $author
+     * @param mixed $orderBy
+     * @param mixed $orderDirection
+     *
      * @return ToDoList[]
      */
     public function findByAuthor(User $author, $orderBy = false, $orderDirection = false)

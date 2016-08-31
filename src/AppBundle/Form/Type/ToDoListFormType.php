@@ -23,7 +23,7 @@ class ToDoListFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\ToDoList'
+            'data_class' => 'AppBundle\Entity\ToDoList',
         ]);
     }
 }

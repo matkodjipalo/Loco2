@@ -35,7 +35,7 @@ class ToDoListController extends Controller
         }
 
         return $this->render('todo_list/view.html.twig', [
-            'toDoList' => $toDoList
+            'toDoList' => $toDoList,
         ]);
     }
 
@@ -56,7 +56,7 @@ class ToDoListController extends Controller
         }
 
         return $this->render('todo_list/new.html.twig', [
-            'toDoListForm' => $form->createView()
+            'toDoListForm' => $form->createView(),
         ]);
     }
 
@@ -79,13 +79,13 @@ class ToDoListController extends Controller
         $formHandler = $this->get('todo_list_form_handler');
 
         if ($formHandler->handleEdit($editForm, $request, $originalTasks)) {
-             $this->addFlash('success', 'ToDoList edited!');
+            $this->addFlash('success', 'ToDoList edited!');
 
             return $this->redirectToRoute('homepage');
         }
 
         return $this->render('todo_list/edit.html.twig', [
-            'toDoListEditForm' => $editForm->createView()
+            'toDoListEditForm' => $editForm->createView(),
         ]);
     }
 
@@ -108,14 +108,15 @@ class ToDoListController extends Controller
 
         return $this->render('todo_list/homepage_ajax_part.html.twig', [
             'toDoLists' => $repo->findByAuthor($user),
-            'search' => ''
+            'search' => '',
         ]);
     }
 
     /**
-     * Vraća cijelu naslovnu stranicu
+     * Vraća cijelu naslovnu stranicu.
      *
-     * @param  Request $request
+     * @param Request $request
+     *
      * @return string
      */
     private function renderWholeHomePage(Request $request)
@@ -126,9 +127,10 @@ class ToDoListController extends Controller
     }
 
     /**
-     * Vraća dio naslovne stranice (kod AJAX poziva)
+     * Vraća dio naslovne stranice (kod AJAX poziva).
      *
-     * @param  Request $request
+     * @param Request $request
+     *
      * @return string
      */
     private function renderPartOfHomePage(Request $request)
@@ -144,7 +146,8 @@ class ToDoListController extends Controller
     }
 
     /**
-     * @param  ToDoList $toDoList
+     * @param ToDoList $toDoList
+     *
      * @return ArrayCollection
      */
     private function getTasksBeforeEdit(ToDoList $toDoList)

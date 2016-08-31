@@ -15,10 +15,10 @@ class TaskFormType extends AbstractType
         $builder
             ->add('name')
             ->add('priority', ChoiceType::class, array(
-                'choices'  => array(
-                    'Low' => "LOW",
-                    'Medium' => "MEDIUM",
-                    'High' => "HIGH"
+                'choices' => array(
+                    'Low' => 'LOW',
+                    'Medium' => 'MEDIUM',
+                    'High' => 'HIGH',
                 ),
             ))
             ->add('deadlineDt', DateType::class, [

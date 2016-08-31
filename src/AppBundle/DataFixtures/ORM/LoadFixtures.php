@@ -21,7 +21,8 @@ class LoadFixtures extends ContainerAwareFixture
     }
 
     /**
-     * @param  EntityManager $em
+     * @param EntityManager $em
+     *
      * @return User
      */
     private function loadUser(EntityManager $em)
@@ -45,8 +46,8 @@ class LoadFixtures extends ContainerAwareFixture
     }
 
     /**
-     * @param  User          $defaultAuthor
-     * @param  EntityManager $em
+     * @param User          $defaultAuthor
+     * @param EntityManager $em
      */
     private function loadToDoLists(User $defaultAuthor, EntityManager $em)
     {
@@ -80,14 +81,14 @@ class LoadFixtures extends ContainerAwareFixture
         $task->setToDoList($toDoList);
         $task->setDeadlineDt($date->add(new \DateInterval('P10D')));
         $task->setName('Posjeta baki');
-        $task->setPriority("HIGH");
+        $task->setPriority('HIGH');
         $task->setIsCompleted(true);
 
         $task2 = new Task();
         $task2->setToDoList($toDoList);
         $task2->setDeadlineDt($date->add(new \DateInterval('P2D')));
         $task2->setName('Kopanje vrta');
-        $task2->setPriority("HIGH");
+        $task2->setPriority('HIGH');
         $task2->setIsCompleted(false);
 
         $em->persist($task);

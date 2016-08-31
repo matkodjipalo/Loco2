@@ -42,9 +42,9 @@ class ToDoList
     private $tasks;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -52,7 +52,7 @@ class ToDoList
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -66,7 +66,7 @@ class ToDoList
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -76,7 +76,7 @@ class ToDoList
     }
 
     /**
-     * Set author
+     * Set author.
      *
      * @param \AppBundle\Entity\User $author
      *
@@ -90,7 +90,7 @@ class ToDoList
     }
 
     /**
-     * Get author
+     * Get author.
      *
      * @return \AppBundle\Entity\User
      */
@@ -100,7 +100,7 @@ class ToDoList
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
@@ -116,7 +116,7 @@ class ToDoList
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -125,7 +125,7 @@ class ToDoList
         return $this->createdAt;
     }
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -133,7 +133,7 @@ class ToDoList
     }
 
     /**
-     * Add task
+     * Add task.
      *
      * @param \AppBundle\Entity\Task $task
      *
@@ -148,7 +148,7 @@ class ToDoList
     }
 
     /**
-     * Remove task
+     * Remove task.
      *
      * @param \AppBundle\Entity\Task $task
      */
@@ -158,7 +158,7 @@ class ToDoList
     }
 
     /**
-     * Get tasks
+     * Get tasks.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

@@ -23,7 +23,7 @@ class SecurityController extends Controller
             'auth/login.html.twig',
             array(
                 'last_username' => $lastUsername,
-                'error'         => $error,
+                'error' => $error,
             )
         );
     }

@@ -12,9 +12,10 @@ class AppExtension extends \Twig_Extension
     }
 
     /**
-     * Filtrira nedovršene taskove
+     * Filtrira nedovršene taskove.
      *
-     * @param  \AppBundle\Entity\Task[] $tasks
+     * @param \AppBundle\Entity\Task[] $tasks
+     *
      * @return array
      */
     public function uncompletedTaskFilter($tasks = [])

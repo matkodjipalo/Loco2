@@ -3,10 +3,8 @@
 namespace AppBundle\DomainManager;
 
 use AppBundle\Entity\ToDoList;
-use AppBundle\Entity\ToTask;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ToDoListManager
 {

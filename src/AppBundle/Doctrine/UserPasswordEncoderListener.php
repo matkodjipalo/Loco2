@@ -4,7 +4,6 @@ namespace AppBundle\Doctrine;
 
 use AppBundle\Entity\User;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 class UserPasswordEncoderListener
@@ -23,7 +22,8 @@ class UserPasswordEncoderListener
     }
 
     /**
-     * @param  LifecycleEventArgs $event
+     * @param LifecycleEventArgs $event
+     *
      * @return string
      */
     public function prePersist(LifecycleEventArgs $event)

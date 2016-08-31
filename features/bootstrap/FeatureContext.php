@@ -2,8 +2,6 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\RawMinkContext;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 
@@ -38,8 +36,6 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
         $purger->purge();
     }
 
-
-
     /**
      * @Given there is site user :username with password :password
      */
@@ -58,6 +54,7 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
         $em = $this->getEntityManager();
         $em->persist($user);
         $em->flush();
+
         return $user;
     }
 
@@ -66,7 +63,7 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
      */
     public function thereAreTodoLists($count)
     {
-        for ($i=0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             $toDoList = new \AppBundle\Entity\ToDoList();
             $toDoList->setName('ToDo List_'.$i);
             $toDoList->setAuthor($this->currentUser);
@@ -74,7 +71,7 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
             $this->getEntityManager()->persist($toDoList);
         }
 
-         $this->getEntityManager()->flush();
+        $this->getEntityManager()->flush();
     }
 
     /**
@@ -117,7 +114,8 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
     public function iPutABreakpoint()
     {
         fwrite(STDOUT, "\033[s    \033[93m[Breakpoint] Press \033[1;93m[RETURN]\033[0;93m to continue...\033[0m");
-        while (fgets(STDIN, 1024) == '') {}
+        while (fgets(STDIN, 1024) == '') {
+        }
         fwrite(STDOUT, "\033[u");
 
         return;
@@ -129,11 +127,10 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
     public function iWaitForASeconds($time)
     {
         $this->getSession()->wait(
-            $time*1000,
+            $time * 1000,
             '(0 === jQuery.active)'
         );
     }
-
 
     /**
      * @return \Behat\Mink\Element\DocumentElement

@@ -20,8 +20,9 @@ class RegistrationFormHandler
     }
 
     /**
-     * @param  FormInterface $form
-     * @param  Request       $request
+     * @param FormInterface $form
+     * @param Request       $request
+     *
      * @return bool
      */
     public function handle(FormInterface $form, Request $request)

@@ -2,7 +2,6 @@
 
 namespace AppBundle\Doctrine;
 
-use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
@@ -10,7 +9,7 @@ use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Rebuilda tablice u bazi
+ * Rebuilda tablice u bazi.
  */
 class SchemaManager
 {
@@ -21,7 +20,7 @@ class SchemaManager
     private $container;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManager      $em
      * @param ContainerInterface $container
      */
     public function __construct(EntityManager $em, ContainerInterface $container)

@@ -6,7 +6,6 @@ use AppBundle\Entity\User;
 use AppBundle\DomainManager\ToDoListManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class ToDoListFormHandler
 {
@@ -22,10 +21,11 @@ class ToDoListFormHandler
     }
 
     /**
-     * @param  FormInterface $form
-     * @param  Request       $request
-     * @param  User          $user
-     * @return boolean
+     * @param FormInterface $form
+     * @param Request       $request
+     * @param User          $user
+     *
+     * @return bool
      */
     public function handleCreate(FormInterface $form, Request $request, User $user)
     {
@@ -41,10 +41,11 @@ class ToDoListFormHandler
     }
 
     /**
-     * @param  FormInterface $form
-     * @param  Request       $request
-     * @param  User          $user
-     * @return boolean
+     * @param FormInterface $form
+     * @param Request       $request
+     * @param User          $user
+     *
+     * @return bool
      */
     public function handleEdit(FormInterface $form, Request $request, $originalTasks)
     {
@@ -58,8 +59,9 @@ class ToDoListFormHandler
     }
 
     /**
-     * @param  FormInterface $form
-     * @param  Request       $request
+     * @param FormInterface $form
+     * @param Request       $request
+     *
      * @return false U slučaju da je forma neispravna, inače ne vraća ništa
      */
     private function handle(FormInterface $form, Request $request)

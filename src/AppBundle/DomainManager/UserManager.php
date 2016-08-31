@@ -26,7 +26,7 @@ class UserManager
 
     /**
      * Zapisuje korisnika u bazu,
-     * te šalje obavijest pretplatnicima o tome
+     * te šalje obavijest pretplatnicima o tome.
      *
      * @param User $user
      */
@@ -42,7 +42,7 @@ class UserManager
     }
 
     /**
-     * Aktivira korisnika, te šalje obavijest pretplatnicima o tome
+     * Aktivira korisnika, te šalje obavijest pretplatnicima o tome.
      *
      * @param User $user
      */

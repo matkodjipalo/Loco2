@@ -3,10 +3,8 @@
 namespace AppBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -90,7 +88,7 @@ class User implements UserInterface
 
     public function getSalt()
     {
-        return null;
+        return;
     }
 
     public function getUsername()
@@ -134,7 +132,7 @@ class User implements UserInterface
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @param string $email
      *
@@ -148,7 +146,7 @@ class User implements UserInterface
     }
 
     /**
-     * Get email
+     * Get email.
      *
      * @return string
      */
@@ -158,7 +156,7 @@ class User implements UserInterface
     }
 
     /**
-     * Set firstName
+     * Set firstName.
      *
      * @param string $firstName
      *
@@ -172,7 +170,7 @@ class User implements UserInterface
     }
 
     /**
-     * Get firstName
+     * Get firstName.
      *
      * @return string
      */
@@ -182,7 +180,7 @@ class User implements UserInterface
     }
 
     /**
-     * Set lastName
+     * Set lastName.
      *
      * @param string $lastName
      *
@@ -196,7 +194,7 @@ class User implements UserInterface
     }
 
     /**
-     * Get lastName
+     * Get lastName.
      *
      * @return string
      */
@@ -206,7 +204,7 @@ class User implements UserInterface
     }
 
     /**
-     * Set registrationDt
+     * Set registrationDt.
      *
      * @param \DateTime $registrationDt
      *
@@ -220,7 +218,7 @@ class User implements UserInterface
     }
 
     /**
-     * Get registrationDt
+     * Get registrationDt.
      *
      * @return \DateTime
      */
@@ -230,7 +228,7 @@ class User implements UserInterface
     }
 
     /**
-     * Set lastLoginDt
+     * Set lastLoginDt.
      *
      * @param \DateTime $lastLoginDt
      *
@@ -244,7 +242,7 @@ class User implements UserInterface
     }
 
     /**
-     * Get lastLoginDt
+     * Get lastLoginDt.
      *
      * @return \DateTime
      */
@@ -254,9 +252,9 @@ class User implements UserInterface
     }
 
     /**
-     * Set isActive
+     * Set isActive.
      *
-     * @param boolean $isActive
+     * @param bool $isActive
      *
      * @return User
      */
@@ -268,9 +266,9 @@ class User implements UserInterface
     }
 
     /**
-     * Get isActive
+     * Get isActive.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIsActive()
     {
@@ -278,7 +276,7 @@ class User implements UserInterface
     }
 
     /**
-     * Set confirmationCode
+     * Set confirmationCode.
      *
      * @param string $confirmationCode
      *
@@ -292,7 +290,7 @@ class User implements UserInterface
     }
 
     /**
-     * Get confirmationCode
+     * Get confirmationCode.
      *
      * @return string
      */

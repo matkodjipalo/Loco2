@@ -37,7 +37,7 @@ class SendConfirmationMailListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            UserEvents::NEW_USER_CREATED => 'onNewUser'
+            UserEvents::NEW_USER_CREATED => 'onNewUser',
         );
     }
 
@@ -66,7 +66,8 @@ class SendConfirmationMailListener implements EventSubscriberInterface
     }
 
     /**
-     * @param  User $user
+     * @param User $user
+     *
      * @return string
      */
     private function renderConfirmationMailBody(User $user)
@@ -75,13 +76,14 @@ class SendConfirmationMailListener implements EventSubscriberInterface
             'email/registration.html.twig',
             array(
                 'user' => $user,
-                'confirmationUrl' => $this->getConfirmationUrl($user)
+                'confirmationUrl' => $this->getConfirmationUrl($user),
             )
         );
     }
 
     /**
      * @param  User user
+     *
      * @return string
      */
     private function getConfirmationUrl(User $user)

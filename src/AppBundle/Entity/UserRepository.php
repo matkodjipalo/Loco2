@@ -16,7 +16,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
      * Korisničko ime u slučaju ove aplikacije je korisnikov email.
      *
      * @param  $username
+     *
      * @return \App\Bundle\User
+     *
      * @throws UsernameNotFoundException
      */
     public function loadUserByUsername($username)
@@ -24,7 +26,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         $user = $this->findOneBy(
             [
                 'email' => $username,
-                'isActive' => true
+                'isActive' => true,
             ]
         );
 

@@ -2,7 +2,6 @@
 
 namespace AppBundle\Event;
 
-use AppBundle\Entity\User;
 use Symfony\Component\EventDispatcher\Event;
 
 class UserEvents extends Event

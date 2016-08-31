@@ -48,9 +48,9 @@ class Task
     private $isCompleted = false;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -58,7 +58,7 @@ class Task
     }
 
     /**
-     * Set priority
+     * Set priority.
      *
      * @param string $priority
      *
@@ -72,7 +72,7 @@ class Task
     }
 
     /**
-     * Get priority
+     * Get priority.
      *
      * @return string
      */
@@ -82,7 +82,7 @@ class Task
     }
 
     /**
-     * Set deadlineDt
+     * Set deadlineDt.
      *
      * @param \DateTime $deadlineDt
      *
@@ -96,7 +96,7 @@ class Task
     }
 
     /**
-     * Get deadlineDt
+     * Get deadlineDt.
      *
      * @return \DateTime
      */
@@ -106,7 +106,7 @@ class Task
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -120,7 +120,7 @@ class Task
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -130,7 +130,7 @@ class Task
     }
 
     /**
-     * Set toDoList
+     * Set toDoList.
      *
      * @param \AppBundle\Entity\ToDoList $toDoList
      *
@@ -144,7 +144,7 @@ class Task
     }
 
     /**
-     * Get toDoList
+     * Get toDoList.
      *
      * @return \AppBundle\Entity\ToDoList
      */
@@ -154,9 +154,9 @@ class Task
     }
 
     /**
-     * Set isCompleted
+     * Set isCompleted.
      *
-     * @param boolean $isCompleted
+     * @param bool $isCompleted
      *
      * @return Task
      */
@@ -168,9 +168,9 @@ class Task
     }
 
     /**
-     * Get isCompleted
+     * Get isCompleted.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIsCompleted()
     {
