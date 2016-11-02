@@ -21,8 +21,9 @@ class SendConfirmationMailListener implements EventSubscriberInterface
     private $twig;
 
     /**
-     * @param \Swift_Mailer $mailer
-     * @param Router        $router
+     * @param \Swift_Mailer     $mailer
+     * @param Router            $router
+     * @param \Twig_Environment $twig
      */
     public function __construct(\Swift_Mailer $mailer, Router $router, \Twig_Environment $twig)
     {
@@ -57,10 +58,10 @@ class SendConfirmationMailListener implements EventSubscriberInterface
         $mailBody = $this->renderConfirmationMailBody($user);
 
         $message = \Swift_Message::newInstance()
-        ->setSubject('Confirm account')
-        ->setFrom('info@matkodjipalo.com')
-        ->setTo($user->getEmail())
-        ->setBody($mailBody);
+            ->setSubject('Confirm account')
+            ->setFrom('info@matkodjipalo.com')
+            ->setTo($user->getEmail())
+            ->setBody($mailBody);
 
         $this->mailer->send($message);
     }
